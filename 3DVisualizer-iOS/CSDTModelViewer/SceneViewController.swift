@@ -10,11 +10,13 @@ import UIKit
 import SceneKit
 import ModelIO
 import SceneKit.ModelIO
+import ARKit
 
 class SceneViewController: UIViewController {
     @IBOutlet weak var sceneView: SCNView!
     @IBOutlet weak var intensitySlider: UISlider!
     @IBOutlet weak var modelLoadingIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var ARButton: UIButton!
     var lightingControl: SCNNode!
     var wigwaam: SCNNode!
     var cameraNode: SCNNode!
@@ -39,6 +41,7 @@ class SceneViewController: UIViewController {
         }
     }
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         modelLoadingIndicator.tintColor = UIColor.white
@@ -54,6 +57,10 @@ class SceneViewController: UIViewController {
                 DispatchQueue.main.async { self?.modelAsset = MDLAsset(url: url)}
             }
             
+        }
+        // hides the ar button if ARKit is not supported on the device.
+        if !ARWorldTrackingConfiguration.isSupported {
+            ARButton = nil
         }
     }
     
@@ -75,7 +82,7 @@ class SceneViewController: UIViewController {
         let scene = SCNScene()
         modelNode = SCNNode(mdlObject: modelObject)
         modelNode.scale = SCNVector3Make(2, 2, 2)
-        modelNode.position = SCNVector3Make(500, 500, 0)
+        //modelNode.position = SCNVector3Make(500, 500, 0)
         modelNode.geometry?.firstMaterial?.diffuse.contents = "texture.jpg"
         modelNode.geometry?.firstMaterial?.blendMode = .alpha
         scene.rootNode.addChildNode(modelNode)
@@ -137,8 +144,8 @@ class SceneViewController: UIViewController {
         //if sender.state == .ended{
             let ctr = sender.view!.center
             let location = SCNVector3Make(Float(ctr.x), Float(ctr.y), 0)
-            //lightingControl.position = location
-            cameraNode.position = location
+            lightingControl.position = location
+            //cameraNode.position = location
         //}
     }
     
@@ -164,6 +171,13 @@ class SceneViewController: UIViewController {
             dest.lightSettings = determineLightType(with: lightingControl.light!)
             dest.blendSettings = determineBlendMode(with: modelNode.geometry!.firstMaterial!.blendMode)
             dest.animationMode = animationMode
+        }
+        if let dest = destinationViewController as? AugmentedRealityViewController{
+            dest.model = modelObject
+            dest.lightSettings = determineLightType(with: lightingControl.light!)
+            dest.blendSettings = determineBlendMode(with: modelNode.geometry!.firstMaterial!.blendMode)
+            dest.animationSettings = animationMode
+            dest.lightColor = lightingControl.light!.color as! UIColor
         }
     }
 }

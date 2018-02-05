@@ -75,3 +75,38 @@ func determineBlendMode(with mode:SCNBlendMode) -> String{
     }
     return "Alpha"
 }
+
+func overlayTextWithVisualEffect(using text:String, on view: UIView){
+    let blurEffect = UIBlurEffect(style: .prominent)
+    let blurredEffectView = UIVisualEffectView(effect: blurEffect)
+    let effectBounds = CGRect(origin: CGPoint(x: UIScreen.main.bounds.width/2 - 150, y: UIScreen.main.bounds.height/2 - 50),size: CGSize(width: 300, height: 100))
+    blurredEffectView.frame = effectBounds
+    blurredEffectView.layer.cornerRadius = 30.0
+    blurredEffectView.clipsToBounds = true
+    let label = UILabel(frame: effectBounds)
+    label.center = CGPoint(x: UIScreen.main.bounds.width/2, y: UIScreen.main.bounds.height/2)
+    label.textAlignment = .center
+    label.text = text
+    label.font = label.font.withSize(30.0)
+    label.textColor = UIColor.black
+    label.adjustsFontSizeToFitWidth = true
+    label.minimumScaleFactor = 0.6
+    label.numberOfLines = 0
+    
+    view.addSubview(blurredEffectView)
+    view.addSubview(label)
+    Timer.scheduledTimer(withTimeInterval: 1, repeats: false){ _ in
+        UIView.transition(with: blurredEffectView, duration: 0.25, options: [.transitionCrossDissolve],
+                          animations: {blurredEffectView.alpha = 0}){ _ in
+                            blurredEffectView.removeFromSuperview()
+        }
+        UIView.transition(with: label, duration: 0.25, options: [.transitionCrossDissolve],
+                          animations: {label.alpha = 0}){ _ in
+                            label.removeFromSuperview()
+        }
+    }
+}
+
+
+
+

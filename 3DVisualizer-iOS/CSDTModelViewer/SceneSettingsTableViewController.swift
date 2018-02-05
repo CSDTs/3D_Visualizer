@@ -71,7 +71,6 @@ class SceneSettingsTableViewController: UITableViewController {
         case 2:
             let curr = allSettings[indexPath.section][indexPath.row]
             if ((animationMode == animationSettings.none && curr == "None") || (animationMode == .rotate && curr == "Rotate")) {
-                print("called")
                 prevAnimationIndex = indexPath
                 cell.accessoryType = .checkmark
             }
