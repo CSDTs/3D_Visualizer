@@ -24,6 +24,7 @@ class SceneViewController: UIViewController {
     var modelObject: MDLMesh!
     var modelNode: SCNNode!
     var modelAsset: MDLAsset!{ didSet{ setUp() } }
+    var ARModelScale: Float = 0.07
     
     override var preferredStatusBarStyle: UIStatusBarStyle{
         return .default
@@ -55,12 +56,13 @@ class SceneViewController: UIViewController {
             } else {
                 let url = Bundle.main.url(forResource: "wigwaam", withExtension: "stl")!
                 DispatchQueue.main.async { self?.modelAsset = MDLAsset(url: url)}
+                self?.ARModelScale = 0.002
             }
             
         }
         // hides the ar button if ARKit is not supported on the device.
         if !ARWorldTrackingConfiguration.isSupported {
-            ARButton = nil
+            ARButton.isHidden = true
         }
     }
     
@@ -77,6 +79,7 @@ class SceneViewController: UIViewController {
             alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             alertController.view.tintColor = customGreen()
             self.present(alertController, animated: true, completion: nil)
+            ARModelScale = 0.002
         }
         
         let scene = SCNScene()
@@ -138,15 +141,14 @@ class SceneViewController: UIViewController {
     
     @IBAction func changeLightIntensity(_ sender: UISlider) {
         lightingControl.light?.intensity = CGFloat(sender.value)
-        //wigwaam.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: 2, z: 0, duration: Double(sender.value))))
     }
     @IBAction func changeLightLocation(_ sender: UITapGestureRecognizer) {
-        //if sender.state == .ended{
-            let ctr = sender.view!.center
-            let location = SCNVector3Make(Float(ctr.x), Float(ctr.y), 0)
-            lightingControl.position = location
-            //cameraNode.position = location
-        //}
+        let ctr = sender.location(in: sceneView)
+        lightingControl.position = SCNVector3Make(Float(ctr.x), Float(ctr.y), 100)
+    }
+    
+    @IBAction func exitSceneView(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
     }
     
     @IBAction func updateSceneSettings(from segue:UIStoryboardSegue){
@@ -154,6 +156,7 @@ class SceneViewController: UIViewController {
             modelNode.geometry?.firstMaterial?.blendMode = stringToBlendMode[settings.selectedBlendSetting]!
             lightingControl.light?.type = stringToLightType[settings.selectedLightSetting]!
             animationMode = settings.selectedAnimationSetting
+            ARModelScale = settings.ARModelScale
         }
     }
     
@@ -171,6 +174,7 @@ class SceneViewController: UIViewController {
             dest.lightSettings = determineLightType(with: lightingControl.light!)
             dest.blendSettings = determineBlendMode(with: modelNode.geometry!.firstMaterial!.blendMode)
             dest.animationMode = animationMode
+            dest.ARModelScale = ARModelScale
         }
         if let dest = destinationViewController as? AugmentedRealityViewController{
             dest.model = modelObject
@@ -178,6 +182,7 @@ class SceneViewController: UIViewController {
             dest.blendSettings = determineBlendMode(with: modelNode.geometry!.firstMaterial!.blendMode)
             dest.animationSettings = animationMode
             dest.lightColor = lightingControl.light!.color as! UIColor
+            dest.modelScale = ARModelScale
         }
     }
 }

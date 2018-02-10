@@ -15,6 +15,9 @@ import SceneKit.ModelIO
 class AugmentedRealityViewController: UIViewController, ARSCNViewDelegate {
     var model: MDLMesh!
     @IBOutlet weak var sceneView: ARSCNView!
+    @IBOutlet weak var statusBackground: UIVisualEffectView!
+    @IBOutlet weak var statusLabel: UILabel!
+    @IBOutlet weak var doneButton: UIButton!
     let scene = SCNScene()
     var isModelAdded = false
     let lightingControl = SCNNode()
@@ -23,6 +26,8 @@ class AugmentedRealityViewController: UIViewController, ARSCNViewDelegate {
     var animationSettings: animationSettings!
     var nodeToUse: SCNNode!
     var lightColor: UIColor!
+    let planeHeight:CGFloat = 0.01
+    var modelScale: Float = 0.07
     
     @IBAction func exitARSession(_ sender: Any) {
         dismiss(animated: true, completion: nil)
@@ -39,6 +44,10 @@ class AugmentedRealityViewController: UIViewController, ARSCNViewDelegate {
         // Set the scene to the view
         sceneView.automaticallyUpdatesLighting = true
         sceneView.scene = scene
+        statusBackground.clipsToBounds = true
+        statusBackground.layer.cornerRadius = 10.0
+
+        configureDropShadow(with: doneButton)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -50,7 +59,7 @@ class AugmentedRealityViewController: UIViewController, ARSCNViewDelegate {
         configuration.worldAlignment = .gravityAndHeading
         
         // Run the view's session
-        sceneView.session.run(configuration)
+        sceneView.session.run(configuration, options: [.removeExistingAnchors, .resetTracking])
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -68,11 +77,17 @@ class AugmentedRealityViewController: UIViewController, ARSCNViewDelegate {
     // MARK: - Gesture Recognizers
     
     @IBAction func hitTestWithTap(_ sender: UITapGestureRecognizer) {
+        guard !isModelAdded else { return }
         let touchLocation = sender.location(in: sceneView)
-        
         if let hit = sceneView.hitTest(touchLocation, types: .featurePoint).first{
             sceneView.session.add(anchor: ARAnchor(transform: hit.worldTransform))
-            DispatchQueue.main.async { overlayTextWithVisualEffect(using: "Success", on: self.view)}
+            DispatchQueue.main.async { overlayTextWithVisualEffect(using: "Success", on: self.view) }
+            nodeToUse = SCNNode(mdlObject: model)
+            nodeToUse.scale = SCNVector3Make(modelScale, modelScale, modelScale)
+            nodeToUse.position = SCNVector3Make(hit.worldTransform.columns.3.x, hit.worldTransform.columns.3.y, hit.worldTransform.columns.3.z)
+            nodeToUse.geometry?.firstMaterial?.blendMode = stringToBlendMode[blendSettings]!
+            sceneView.scene.rootNode.addChildNode(nodeToUse)
+            isModelAdded = true
         } else {
             DispatchQueue.main.async { overlayTextWithVisualEffect(using: "Try Again", on: self.view)}
         }
@@ -93,11 +108,15 @@ class AugmentedRealityViewController: UIViewController, ARSCNViewDelegate {
             if !isModelAdded{
                 DispatchQueue.main.async { overlayTextWithVisualEffect(using: "Surface Recognized", on: self.view)}
                 node = SCNNode()
-                nodeToUse = SCNNode(mdlObject: model)
-                nodeToUse.scale = SCNVector3Make(0.3, 0.3, 0.3)
-                nodeToUse.position = SCNVector3Make(planeAnchor.center.x, planeAnchor.center.y, planeAnchor.center.z)
-                nodeToUse.geometry?.firstMaterial?.blendMode = stringToBlendMode[blendSettings]!
-            
+                
+                //indicates a plane
+                let geometry = SCNBox(width: CGFloat(planeAnchor.extent.x), height: planeHeight, length: CGFloat(planeAnchor.extent.z), chamferRadius: 2.0)
+                geometry.firstMaterial?.diffuse.contents = UIColor.green
+                geometry.firstMaterial?.specular.contents = UIColor.white
+                geometry.firstMaterial?.transparency = 0.7
+                let newPlane = SCNNode(geometry: geometry)
+                newPlane.position = SCNVector3Make(planeAnchor.center.x, Float(planeHeight/2), planeAnchor.center.z)
+                
                 lightingControl.light = SCNLight()
                 lightingControl.light?.type = stringToLightType[lightSettings]!
                 lightingControl.light?.color = UIColor.white
@@ -106,8 +125,7 @@ class AugmentedRealityViewController: UIViewController, ARSCNViewDelegate {
                 lightingControl.light?.color = lightColor
                 
                 node?.addChildNode(lightingControl)
-                node?.addChildNode(nodeToUse)
-                isModelAdded = true
+                node?.addChildNode(newPlane)
                 
                 let nodeToAnimate = node?.childNodes.first
                 if nodeToAnimate != nil {
@@ -123,12 +141,31 @@ class AugmentedRealityViewController: UIViewController, ARSCNViewDelegate {
     }
     
     func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
-        guard isModelAdded else { return }
+        //guard isModelAdded else { return }
         if let planeAnchor = anchor as? ARPlaneAnchor{
-            node.position = SCNVector3Make(planeAnchor.center.x, planeAnchor.center.y, planeAnchor.center.z)
+            if node.childNodes.count > 0{
+                let planeNode = node.childNodes.first!
+                planeNode.position = SCNVector3Make(planeAnchor.center.x, Float(planeHeight/2), planeAnchor.center.z)
+                if let box = planeNode.geometry as? SCNBox{
+                    if isModelAdded{
+                        box.firstMaterial?.transparency = 0.0
+                    } else {
+                        box.width = CGFloat(planeAnchor.extent.x)
+                        box.length = CGFloat(planeAnchor.extent.z)
+                        box.height = planeHeight
+                    }
+                }
+                guard isModelAdded else { return }
+                if node.childNodes.count > 1{
+                    let model = node.childNodes[0]
+                    model.position = SCNVector3Make(planeAnchor.center.x, planeAnchor.center.y, planeAnchor.center.z)
+                    model.scale = SCNVector3Make(modelScale, modelScale, modelScale)
+                    let plane = node.childNodes[1]
+                    plane.geometry?.firstMaterial?.transparency = 0.0
+                }
+            }
         }
     }
-    
     
     func session(_ session: ARSession, didFailWithError error: Error) {
         DispatchQueue.main.async { overlayTextWithVisualEffect(using: "Failed", on: self.view)}
@@ -145,6 +182,24 @@ class AugmentedRealityViewController: UIViewController, ARSCNViewDelegate {
     func sessionInterruptionEnded(_ session: ARSession) {
         // Reset tracking and/or remove existing anchors if consistent tracking is required
         DispatchQueue.main.async { overlayTextWithVisualEffect(using: "Resumed", on: self.view)}
+    }
+    
+    func session(_ session: ARSession, cameraDidChangeTrackingState camera: ARCamera) {
+        switch camera.trackingState {
+        case  .notAvailable:
+            statusLabel.text = "Not Available"
+        case .normal:
+            statusLabel.text = "Normal"
+        case .limited(let reason):
+            switch reason{
+            case .initializing:
+                statusLabel.text = "Initializing"
+            case .excessiveMotion:
+                statusLabel.text = "Slow Down"
+            case .insufficientFeatures:
+                statusLabel.text = "Insufficient Features"
+            }
+        }
     }
 
 }

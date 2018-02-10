@@ -10,7 +10,10 @@ This is an iOS application for visualizing 3D CAD models, created using SceneKit
 * Zoom, move and rotate model with gestures
 * Manipulate the color of the model with segmented control
 * Adjust light intensity with slider
+* Change the position of the light with a tap on the scene
 * Settings Page
+    * Change the scale factor used for the AR model
+        * **For large models like wigwam, a very small factor such 0.002 is needed to display AR content correctly**
     * Pick from light types: omnidirectional, directional, probe, spot or ambient
     * Pick from blend modes: add, alpha, multiply, subtract, screen or replace
     * Animations! Choose from no animation or infinite rotation
@@ -53,6 +56,8 @@ class ViewController: UIViewController {
 
 ### Project models to the real world using Augmented Reality
 * Wait until the device has found a surface to place the model.
+* This app will highlight the the plane detected by ARKit.
+* Once the plane is shown, tapping the plane will place the AR model on the plane
 * Once the model is loaded, pan gesture can be used to adjust the position of the light projected onto the model.
 * The AR model inherits all the settings from the previous SceneKit view.
 
@@ -95,6 +100,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     }
 }
 ```
+### Third Party Libraries Used:
+* [Alamofire](https://github.com/Alamofire/Alamofire)  ( Swift Networking Library )
 
-
-## Thanks for viewing!
+### **Thanks for viewing!**

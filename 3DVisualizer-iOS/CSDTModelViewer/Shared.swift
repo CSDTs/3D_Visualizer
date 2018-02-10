@@ -107,6 +107,25 @@ func overlayTextWithVisualEffect(using text:String, on view: UIView){
     }
 }
 
+func planeRectangle() -> UIBezierPath{
+    let path = UIBezierPath()
+    path.lineWidth = 5.0
+    path.move(to: CGPoint(x: 0.0, y: 0.0))
+    path.addLine(to: CGPoint(x: 0.0, y: 100.0))
+    path.addLine(to: CGPoint(x: 100.0, y: 100.0))
+    path.addLine(to: CGPoint(x: 100.0, y: 0.0))
+    path.close()
+    return path
+}
+
+func configureDropShadow(with button:UIButton){
+    button.layer.shadowColor = UIColor.black.cgColor
+    button.layer.shadowRadius = 3.0
+    button.layer.shadowOpacity = 1.0
+    button.layer.shadowOffset = CGSize(width: 4, height: 4)
+    button.layer.masksToBounds = false
+}
+
 
 
 

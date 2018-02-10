@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class ModelPickerViewController: UIViewController {
     var customURL: String! = "None"
@@ -16,6 +17,17 @@ class ModelPickerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+//        Alamofire.request("https://csdt.rpi.edu/api/projects/").responseJSON { response in
+//            if let json = response.result.value {
+//                print("JSON: \(json)") // serialized json response
+//            }
+//            
+//            if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
+//                print("Data: \(utf8Text)") // original server data as UTF8 string
+//            }
+//        }
+
         
         customURLButton.layer.cornerRadius = 15.0
         customURLButton.clipsToBounds = true
