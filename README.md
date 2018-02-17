@@ -5,6 +5,7 @@ This is an iOS application for visualizing 3D CAD models, created using SceneKit
 
 ### Fetch Models
 *  Fetch the models using a valid web link or use the default wigwam model. If the link is invalid, the application will fall back to using the default wigwam model.
+* Pick a model from the 3D/2D list. For 2D, the app presents a grid-like layout displaying all the images of projects fetched from the applications API from CSDT. The user can view the image in detail and display the image using AR.
 
 ### Manupulate models with SceneKit
 * Zoom, move and rotate model with gestures
@@ -58,8 +59,13 @@ class ViewController: UIViewController {
 * Wait until the device has found a surface to place the model.
 * This app will highlight the the plane detected by ARKit.
 * Once the plane is shown, tapping the plane will place the AR model on the plane
+* Zoom the AR model with pinch gesture
+* Rotate the AR model with rotation gesture
+    *  Choose from 3 rotation axes: X, Y and Z
 * Once the model is loaded, pan gesture can be used to adjust the position of the light projected onto the model.
 * The AR model inherits all the settings from the previous SceneKit view.
+* The image selected from the 2D list can be projected to the AR surface. (Only on a horizontal surface)
+    * In the future, once the newest ARKit features are out of beta stage, the image can be projected to a vertical surface like a wall.
 
 Relevant code needed to setup AR - from a WWDC 2017 video
 

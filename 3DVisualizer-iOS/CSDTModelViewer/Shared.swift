@@ -35,6 +35,7 @@ enum animationSettings{
     case rotate
 }
 
+
 let stringToLightType: Dictionary<String, SCNLight.LightType> =
     ["Omnidirectional": .omni, "Ambient":.ambient, "Directional":.directional, "Probe": .probe, "Spot": .spot]
 let stringToBlendMode: Dictionary<String, SCNBlendMode> =
@@ -126,6 +127,15 @@ func configureDropShadow(with button:UIButton){
     button.layer.masksToBounds = false
 }
 
-
-
-
+func setupCollectionViewLayout(with collectionView: UICollectionView?,
+                                    andSize sizeClass: UIUserInterfaceSizeClass){
+    let widthFactor: CGFloat = (sizeClass == .compact) ? 2.0 : 3.0
+    let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+    let width = UIScreen.main.bounds.width
+    layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+    layout.itemSize = CGSize(width: width / widthFactor, height: width / 1.71)// 2.05 & 1.75
+    layout.minimumInteritemSpacing = 0
+    layout.minimumLineSpacing = 0
+    layout.headerReferenceSize = CGSize(width: UIScreen.main.bounds.width, height: 27)
+    collectionView!.collectionViewLayout = layout
+}

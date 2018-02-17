@@ -16,8 +16,12 @@
 		044727162023C64C003A9095 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 044727142023C64C003A9095 /* LaunchScreen.storyboard */; };
 		044727202023D3BF003A9095 /* wigwaam.stl in Resources */ = {isa = PBXBuildFile; fileRef = 0447271F2023D3BF003A9095 /* wigwaam.stl */; };
 		045B39092026327800E3BA39 /* AugmentedRealityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045B39082026327800E3BA39 /* AugmentedRealityViewController.swift */; };
+		047A8DF22037A4590066521A /* MasterListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047A8DF12037A4590066521A /* MasterListViewController.swift */; };
+		047A8DF62037CAED0066521A /* ThreeDModelListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047A8DF52037CAED0066521A /* ThreeDModelListTableViewController.swift */; };
+		047A8DF82037D0C10066521A /* TwoDModelCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047A8DF72037D0C10066521A /* TwoDModelCollectionViewController.swift */; };
+		04854EE820312A6E00D4958C /* SettingsPickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04854EE720312A6E00D4958C /* SettingsPickerTableViewCell.swift */; };
+		0486266120380590003E1400 /* TwoDSpecificsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0486266020380590003E1400 /* TwoDSpecificsViewController.swift */; };
 		04AFD7EF202434B600FA5DFF /* ModelPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFD7EE202434B600FA5DFF /* ModelPickerViewController.swift */; };
-		04B46B9820241E2600C069E7 /* texture.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 04B46B9720241E2500C069E7 /* texture.jpg */; };
 		3501D39EF228C1775D27D401 /* Pods_CSDTModelViewer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 328D86A68850FCB8F41D52F0 /* Pods_CSDTModelViewer.framework */; };
 /* End PBXBuildFile section */
 
@@ -33,8 +37,12 @@
 		044727172023C64C003A9095 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0447271F2023D3BF003A9095 /* wigwaam.stl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = wigwaam.stl; sourceTree = "<group>"; };
 		045B39082026327800E3BA39 /* AugmentedRealityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AugmentedRealityViewController.swift; sourceTree = "<group>"; };
+		047A8DF12037A4590066521A /* MasterListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterListViewController.swift; sourceTree = "<group>"; };
+		047A8DF52037CAED0066521A /* ThreeDModelListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreeDModelListTableViewController.swift; sourceTree = "<group>"; };
+		047A8DF72037D0C10066521A /* TwoDModelCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoDModelCollectionViewController.swift; sourceTree = "<group>"; };
+		04854EE720312A6E00D4958C /* SettingsPickerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPickerTableViewCell.swift; sourceTree = "<group>"; };
+		0486266020380590003E1400 /* TwoDSpecificsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoDSpecificsViewController.swift; sourceTree = "<group>"; };
 		04AFD7EE202434B600FA5DFF /* ModelPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelPickerViewController.swift; sourceTree = "<group>"; };
-		04B46B9720241E2500C069E7 /* texture.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = texture.jpg; sourceTree = "<group>"; };
 		14CC5F52A9D4EF190A6985F4 /* Pods-CSDTModelViewer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CSDTModelViewer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CSDTModelViewer/Pods-CSDTModelViewer.debug.xcconfig"; sourceTree = "<group>"; };
 		328D86A68850FCB8F41D52F0 /* Pods_CSDTModelViewer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CSDTModelViewer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9098B8F5B7076EB16E061B56 /* Pods-CSDTModelViewer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CSDTModelViewer.release.xcconfig"; path = "Pods/Target Support Files/Pods-CSDTModelViewer/Pods-CSDTModelViewer.release.xcconfig"; sourceTree = "<group>"; };
@@ -81,7 +89,6 @@
 		0447270A2023C64C003A9095 /* CSDTModelViewer */ = {
 			isa = PBXGroup;
 			children = (
-				04B46B9720241E2500C069E7 /* texture.jpg */,
 				0447271F2023D3BF003A9095 /* wigwaam.stl */,
 				0447270B2023C64C003A9095 /* AppDelegate.swift */,
 				0447270D2023C64C003A9095 /* SceneViewController.swift */,
@@ -90,6 +97,11 @@
 				0420FFAE2025075A00FCA0EB /* Shared.swift */,
 				045B39082026327800E3BA39 /* AugmentedRealityViewController.swift */,
 				0447270F2023C64C003A9095 /* Main.storyboard */,
+				0486266020380590003E1400 /* TwoDSpecificsViewController.swift */,
+				047A8DF72037D0C10066521A /* TwoDModelCollectionViewController.swift */,
+				047A8DF52037CAED0066521A /* ThreeDModelListTableViewController.swift */,
+				047A8DF12037A4590066521A /* MasterListViewController.swift */,
+				04854EE720312A6E00D4958C /* SettingsPickerTableViewCell.swift */,
 				044727122023C64C003A9095 /* Assets.xcassets */,
 				044727142023C64C003A9095 /* LaunchScreen.storyboard */,
 				044727172023C64C003A9095 /* Info.plist */,
@@ -168,7 +180,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				04B46B9820241E2600C069E7 /* texture.jpg in Resources */,
 				044727162023C64C003A9095 /* LaunchScreen.storyboard in Resources */,
 				044727202023D3BF003A9095 /* wigwaam.stl in Resources */,
 				044727132023C64C003A9095 /* Assets.xcassets in Resources */,
@@ -237,10 +248,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				047A8DF22037A4590066521A /* MasterListViewController.swift in Sources */,
 				0420FFAF2025075A00FCA0EB /* Shared.swift in Sources */,
 				0447270E2023C64C003A9095 /* SceneViewController.swift in Sources */,
+				0486266120380590003E1400 /* TwoDSpecificsViewController.swift in Sources */,
+				047A8DF82037D0C10066521A /* TwoDModelCollectionViewController.swift in Sources */,
+				04854EE820312A6E00D4958C /* SettingsPickerTableViewCell.swift in Sources */,
 				0447270C2023C64C003A9095 /* AppDelegate.swift in Sources */,
 				04AFD7EF202434B600FA5DFF /* ModelPickerViewController.swift in Sources */,
+				047A8DF62037CAED0066521A /* ThreeDModelListTableViewController.swift in Sources */,
 				045B39092026327800E3BA39 /* AugmentedRealityViewController.swift in Sources */,
 				0420FFAD2025021600FCA0EB /* SceneSettingsTableViewController.swift in Sources */,
 			);

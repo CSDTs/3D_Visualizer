@@ -9,7 +9,7 @@
 import UIKit
 
 class SceneSettingsTableViewController: UITableViewController {
-    let allSettings: [[String]] = [["PlaceHolder"],
+    let allSettings: [[String]] = [["AR Model Scale", "Rotation Axis"],
                                    ["Ambient", "Directional", "Omnidirectional", "Probe", "Spot"],
                                    ["Add","Alpha", "Multiply", "Subtract", "Screen", "Replace"],
                                    ["None", "Rotate"]]
@@ -26,6 +26,7 @@ class SceneSettingsTableViewController: UITableViewController {
     var prevAnimationIndex: IndexPath!
     var animationMode: animationSettings!
     var ARModelScale:Float!
+    var ARRotationAxis: String!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,9 +57,18 @@ class SceneSettingsTableViewController: UITableViewController {
     
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
+        if indexPath.section == 0 && indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ARScale", for: indexPath)
+            cell.textLabel?.text = allSettings[indexPath.section][indexPath.row]
             cell.detailTextLabel?.text = String(ARModelScale)
+            return cell
+        }
+        if indexPath.section == 0 && indexPath.row == 1{
+            let cell = tableView.dequeueReusableCell(withIdentifier: "settingsPickerCell", for: indexPath)
+            if let pickerCell = cell as? SettingsPickerTableViewCell{
+                pickerCell.dataSource = ["X","Y","Z"]
+                pickerCell.selectedSetting = ARRotationAxis
+            }
             return cell
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: "settingsCell", for: indexPath)
@@ -94,6 +104,7 @@ class SceneSettingsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.section{
         case 0:
+            guard indexPath.row == 0 else {return}
             let alert = UIAlertController(title: "Enter AR Model Scale", message: nil, preferredStyle: .alert)
             alert.addTextField{ textField in
                 textField.text = String(self.ARModelScale)
@@ -130,6 +141,22 @@ class SceneSettingsTableViewController: UITableViewController {
         default:break
         }
         impactGenerator.impactOccurred()
+    }
+    
+    // prepare for unwind segue back to scenekit view - get the value from picker
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let _ = segue.destination as? SceneViewController{
+            let rotationAxisPickerIndex = IndexPath(row: 1, section: 0)
+            ARRotationAxis = (tableView.cellForRow(at: rotationAxisPickerIndex) as? SettingsPickerTableViewCell)?.selectedSetting ?? "X"
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        // aka the picker
+        if indexPath.row == 1 && indexPath.section == 0 {
+            return 137.0
+        }
+        return UITableViewAutomaticDimension
     }
 
 }

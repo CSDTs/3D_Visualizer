@@ -25,6 +25,7 @@ class SceneViewController: UIViewController {
     var modelNode: SCNNode!
     var modelAsset: MDLAsset!{ didSet{ setUp() } }
     var ARModelScale: Float = 0.07
+    var ARRotationAxis: String = "X"
     
     override var preferredStatusBarStyle: UIStatusBarStyle{
         return .default
@@ -47,6 +48,7 @@ class SceneViewController: UIViewController {
         super.viewDidLoad()
         modelLoadingIndicator.tintColor = UIColor.white
         modelLoadingIndicator.startAnimating()
+        navigationController?.setNavigationBarHidden(true, animated: true)
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             if self?.customURL != "None"{
                 guard let url = URL(string: (self?.customURL)!) else {
@@ -60,7 +62,7 @@ class SceneViewController: UIViewController {
             }
             
         }
-        // hides the ar button if ARKit is not supported on the device.
+        // hides the ar button if Augmented Reality is not supported on the device.
         if !ARWorldTrackingConfiguration.isSupported {
             ARButton.isHidden = true
         }
@@ -83,11 +85,11 @@ class SceneViewController: UIViewController {
         }
         
         let scene = SCNScene()
+        
         modelNode = SCNNode(mdlObject: modelObject)
         modelNode.scale = SCNVector3Make(2, 2, 2)
-        //modelNode.position = SCNVector3Make(500, 500, 0)
-        modelNode.geometry?.firstMaterial?.diffuse.contents = "texture.jpg"
         modelNode.geometry?.firstMaterial?.blendMode = .alpha
+        
         scene.rootNode.addChildNode(modelNode)
         
         lightingControl = SCNNode()
@@ -157,6 +159,7 @@ class SceneViewController: UIViewController {
             lightingControl.light?.type = stringToLightType[settings.selectedLightSetting]!
             animationMode = settings.selectedAnimationSetting
             ARModelScale = settings.ARModelScale
+            ARRotationAxis = settings.ARRotationAxis
         }
     }
     
@@ -175,6 +178,7 @@ class SceneViewController: UIViewController {
             dest.blendSettings = determineBlendMode(with: modelNode.geometry!.firstMaterial!.blendMode)
             dest.animationMode = animationMode
             dest.ARModelScale = ARModelScale
+            dest.ARRotationAxis = ARRotationAxis
         }
         if let dest = destinationViewController as? AugmentedRealityViewController{
             dest.model = modelObject
@@ -183,6 +187,7 @@ class SceneViewController: UIViewController {
             dest.animationSettings = animationMode
             dest.lightColor = lightingControl.light!.color as! UIColor
             dest.modelScale = ARModelScale
+            dest.rotationAxis = ARRotationAxis
         }
     }
 }

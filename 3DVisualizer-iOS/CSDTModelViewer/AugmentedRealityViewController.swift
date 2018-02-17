@@ -20,6 +20,7 @@ class AugmentedRealityViewController: UIViewController, ARSCNViewDelegate {
     @IBOutlet weak var doneButton: UIButton!
     let scene = SCNScene()
     var isModelAdded = false
+    var isPlaneAdded = false
     let lightingControl = SCNNode()
     var lightSettings: String!
     var blendSettings: String!
@@ -28,6 +29,11 @@ class AugmentedRealityViewController: UIViewController, ARSCNViewDelegate {
     var lightColor: UIColor!
     let planeHeight:CGFloat = 0.01
     var modelScale: Float = 0.07
+    var previousRotationAngle: CGFloat = 0
+    var rotationAxis: String!
+    var prevZoomScale: CGFloat = 0
+    var isThreeD = true
+    var twoDImage: UIImage?
     
     @IBAction func exitARSession(_ sender: Any) {
         dismiss(animated: true, completion: nil)
@@ -57,6 +63,7 @@ class AugmentedRealityViewController: UIViewController, ARSCNViewDelegate {
         let configuration = ARWorldTrackingConfiguration()
         configuration.planeDetection = .horizontal
         configuration.worldAlignment = .gravityAndHeading
+        configuration.isLightEstimationEnabled = true
         
         // Run the view's session
         sceneView.session.run(configuration, options: [.removeExistingAnchors, .resetTracking])
@@ -82,7 +89,16 @@ class AugmentedRealityViewController: UIViewController, ARSCNViewDelegate {
         if let hit = sceneView.hitTest(touchLocation, types: .featurePoint).first{
             sceneView.session.add(anchor: ARAnchor(transform: hit.worldTransform))
             DispatchQueue.main.async { overlayTextWithVisualEffect(using: "Success", on: self.view) }
-            nodeToUse = SCNNode(mdlObject: model)
+            
+            if isThreeD{
+                nodeToUse = SCNNode(mdlObject: model)
+            } else {
+                let geometry = SCNBox(width: 300, height: 300, length: 0.01, chamferRadius: 0)
+                geometry.firstMaterial?.diffuse.contents = twoDImage
+                nodeToUse = SCNNode(geometry: geometry)
+                nodeToUse.runAction(SCNAction.rotateBy(x: CGFloat.pi/2, y: 0, z: 0, duration: 0.0001))
+            }
+            
             nodeToUse.scale = SCNVector3Make(modelScale, modelScale, modelScale)
             nodeToUse.position = SCNVector3Make(hit.worldTransform.columns.3.x, hit.worldTransform.columns.3.y, hit.worldTransform.columns.3.z)
             nodeToUse.geometry?.firstMaterial?.blendMode = stringToBlendMode[blendSettings]!
@@ -96,7 +112,35 @@ class AugmentedRealityViewController: UIViewController, ARSCNViewDelegate {
     @IBAction func changeLightPosition(_ sender: UIPanGestureRecognizer) {
         guard isModelAdded else { return }
         let location = sender.location(in: sceneView)
-        lightingControl.position = SCNVector3Make(Float(location.x), Float(location.y), 100)
+        lightingControl.position = SCNVector3Make(Float(location.x), 100, Float(location.y))
+        //statusLabel.text = "\(location.x),100,\(location.y)"
+    }
+    
+    @IBAction func rotateModel(_ sender: UIRotationGestureRecognizer) {
+        guard isModelAdded else { return }
+        if sender.state == .changed{
+            let rotationAngle = sender.rotation - previousRotationAngle
+            switch rotationAxis{
+            case "X":
+                nodeToUse.runAction(SCNAction.rotateBy(x: rotationAngle * 0.1, y: 0, z: 0, duration: 0.0001))
+            case "Y":
+                nodeToUse.runAction(SCNAction.rotateBy(x: 0, y: rotationAngle * -0.1, z: 0, duration: 0.0001))
+            case "Z":
+                nodeToUse.runAction(SCNAction.rotateBy(x: 0, y: 0, z: rotationAngle * 0.1, duration: 0.0001))
+            default:
+                nodeToUse.runAction(SCNAction.rotateBy(x: 0, y: rotationAngle * 0.1, z: 0, duration: 0.0001))
+            }
+            previousRotationAngle = rotationAngle
+        }
+    }
+    
+    @IBAction func zoomModel(_ sender: UIPinchGestureRecognizer) {
+        guard isModelAdded else { return }
+        let zoomFactor = Float(sender.scale * 0.001) + Float(prevZoomScale)
+        nodeToUse.scale = SCNVector3Make(zoomFactor, zoomFactor, zoomFactor)
+        if sender.state == .ended{
+            prevZoomScale = sender.scale * 0.001
+        }
     }
     
     // MARK: - ARSCNViewDelegate
@@ -105,7 +149,7 @@ class AugmentedRealityViewController: UIViewController, ARSCNViewDelegate {
         var node: SCNNode?
         
         if let planeAnchor = anchor as? ARPlaneAnchor{
-            if !isModelAdded{
+            if !isModelAdded && !isPlaneAdded{
                 DispatchQueue.main.async { overlayTextWithVisualEffect(using: "Surface Recognized", on: self.view)}
                 node = SCNNode()
                 
@@ -121,7 +165,7 @@ class AugmentedRealityViewController: UIViewController, ARSCNViewDelegate {
                 lightingControl.light?.type = stringToLightType[lightSettings]!
                 lightingControl.light?.color = UIColor.white
                 lightingControl.light?.intensity = 2000
-                lightingControl.position = SCNVector3Make(0, 50, 50)
+                lightingControl.position = SCNVector3Make(50, 50, 50)
                 lightingControl.light?.color = lightColor
                 
                 node?.addChildNode(lightingControl)
@@ -135,6 +179,7 @@ class AugmentedRealityViewController: UIViewController, ARSCNViewDelegate {
                     default: break
                     }
                 }
+                isPlaneAdded = true
             }
         }        
         return node

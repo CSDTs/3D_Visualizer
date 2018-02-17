@@ -14,26 +14,16 @@ class ModelPickerViewController: UIViewController {
     let defaultURL = "http://thingiverse-production-new.s3.amazonaws.com/assets/c4/4c/76/de/9b/jordanb.stl"
     @IBOutlet weak var customURLButton: UIButton!
     @IBOutlet weak var defaultURLButton: UIButton!
+    @IBOutlet weak var listButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        Alamofire.request("https://csdt.rpi.edu/api/projects/").responseJSON { response in
-//            if let json = response.result.value {
-//                print("JSON: \(json)") // serialized json response
-//            }
-//            
-//            if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
-//                print("Data: \(utf8Text)") // original server data as UTF8 string
-//            }
-//        }
-
-        
         customURLButton.layer.cornerRadius = 15.0
         customURLButton.clipsToBounds = true
         defaultURLButton.layer.cornerRadius = 15.0
         defaultURLButton.clipsToBounds = true
-        // Do any additional setup after loading the view.
+        listButton.layer.cornerRadius = 15.0
+        listButton.clipsToBounds = true
     }
 
     override func didReceiveMemoryWarning() {
