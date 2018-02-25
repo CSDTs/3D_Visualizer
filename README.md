@@ -12,6 +12,7 @@ This is an iOS application for visualizing 3D CAD models, created using SceneKit
 * Manipulate the color of the model with segmented control
 * Adjust light intensity with slider
 * Change the position of the light with a tap on the scene
+* Pick the color of model with a horizontally-scrollable picker interface.
 * Settings Page
     * Change the scale factor used for the AR model
         * **For large models like wigwam, a very small factor such 0.002 is needed to display AR content correctly**

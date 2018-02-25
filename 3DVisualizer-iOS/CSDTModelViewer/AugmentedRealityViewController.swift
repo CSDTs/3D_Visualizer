@@ -136,10 +136,13 @@ class AugmentedRealityViewController: UIViewController, ARSCNViewDelegate {
     
     @IBAction func zoomModel(_ sender: UIPinchGestureRecognizer) {
         guard isModelAdded else { return }
-        let zoomFactor = Float(sender.scale * 0.001) + Float(prevZoomScale)
-        nodeToUse.scale = SCNVector3Make(zoomFactor, zoomFactor, zoomFactor)
-        if sender.state == .ended{
+        switch sender.state {
+        case .changed:
+            let zoomFactor = Float(sender.scale * 0.001) + Float(prevZoomScale)
+            nodeToUse.scale = SCNVector3Make(zoomFactor, zoomFactor, zoomFactor)
+        case .ended:
             prevZoomScale = sender.scale * 0.001
+        default: break
         }
     }
     
@@ -165,7 +168,7 @@ class AugmentedRealityViewController: UIViewController, ARSCNViewDelegate {
                 lightingControl.light?.type = stringToLightType[lightSettings]!
                 lightingControl.light?.color = UIColor.white
                 lightingControl.light?.intensity = 2000
-                lightingControl.position = SCNVector3Make(50, 50, 50)
+                lightingControl.position = SCNVector3Make(242, 100, 118)
                 lightingControl.light?.color = lightColor
                 
                 node?.addChildNode(lightingControl)

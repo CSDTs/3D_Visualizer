@@ -13,6 +13,7 @@ class TwoDSpecificsViewController: UIViewController {
     @IBOutlet weak var specificsImage: UIImageView!
     @IBOutlet weak var specificsTextView: UITextView!
     @IBOutlet weak var viewARButton: UIButton!
+    @IBOutlet weak var imageLoadingIndicator: UIActivityIndicatorView!
     var specificData: (String, String, String, String)!
     var isFullyLoaded = false
     
@@ -25,6 +26,7 @@ class TwoDSpecificsViewController: UIViewController {
         
         viewARButton.layer.cornerRadius = 15.0
         viewARButton.clipsToBounds = true
+        imageLoadingIndicator.startAnimating()
         
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             let url = URL(string: (self?.specificData.2)!)
@@ -33,6 +35,7 @@ class TwoDSpecificsViewController: UIViewController {
                     self?.specificsImage.image = image
                     self?.specificsImage.clipsToBounds = true
                     self?.isFullyLoaded = true
+                    self?.imageLoadingIndicator.stopAnimating()
                 }
             }
         }

@@ -12,11 +12,12 @@ import ModelIO
 import SceneKit.ModelIO
 import ARKit
 
-class SceneViewController: UIViewController {
+class SceneViewController: UIViewController, UIPopoverPresentationControllerDelegate {
     @IBOutlet weak var sceneView: SCNView!
     @IBOutlet weak var intensitySlider: UISlider!
     @IBOutlet weak var modelLoadingIndicator: UIActivityIndicatorView!
     @IBOutlet weak var ARButton: UIButton!
+    @IBOutlet weak var colorSegments: UISegmentedControl!
     var lightingControl: SCNNode!
     var wigwaam: SCNNode!
     var cameraNode: SCNNode!
@@ -26,6 +27,7 @@ class SceneViewController: UIViewController {
     var modelAsset: MDLAsset!{ didSet{ setUp() } }
     var ARModelScale: Float = 0.07
     var ARRotationAxis: String = "X"
+    var selectedColor: UIColor = UIColor.clear
     
     override var preferredStatusBarStyle: UIStatusBarStyle{
         return .default
@@ -134,8 +136,6 @@ class SceneViewController: UIViewController {
             lightingControl.light?.color = UIColor.orange
         case 2:
             lightingControl.light?.color = UIColor.green
-        case 3:
-            lightingControl.light?.color = UIColor.yellow
         default:
             break
         }
@@ -189,6 +189,83 @@ class SceneViewController: UIViewController {
             dest.modelScale = ARModelScale
             dest.rotationAxis = ARRotationAxis
         }
+        if let dest = destinationViewController as? ColorPickerCollectionView{
+            dest.selectedColor = lightingControl.light?.color as! UIColor
+            if let ppc = segue.destination.popoverPresentationController{
+                ppc.delegate = self
+            }
+        }
     }
+    
+    @IBAction func getColorFromPicker(with segue: UIStoryboardSegue){
+        if(selectedColor != lightingControl.light?.color as! UIColor){
+            colorSegments.selectedSegmentIndex = -1 // deselect the segment if different
+        }
+        lightingControl.light?.color = selectedColor
+    }
+    
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
+    }
+}
+
+class ColorPickerCell: UICollectionViewCell{
+    @IBOutlet weak var colorView: UIView!
+    var color: UIColor!{
+        didSet{
+            colorView.backgroundColor = color
+            colorView.clipsToBounds = true
+            colorView.layer.cornerRadius = 39.0
+        }
+    }
+}
+
+class ColorPickerCollectionView: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource{
+    let colors: [UIColor] = [UIColor.black, UIColor.blue, UIColor.brown, UIColor.cyan, UIColor.purple,UIColor.gray,UIColor.yellow,                    UIColor.darkGray,UIColor.magenta, UIColor().rgb(r: 250, g: 190, b:190), UIColor().rgb(r: 210, g: 245, b:60), UIColor().rgb(r: 230, g: 190, b:255), UIColor().rgb(r: 255, g: 250, b:200), UIColor().rgb(r: 255, g: 215, b:180)]
+    var selectedColor: UIColor!
+    let hapticGenerator = UIImpactFeedbackGenerator(style: .medium)
+    
+    @IBOutlet weak var colorsColelctionView: UICollectionView! {
+        didSet{
+            colorsColelctionView.dataSource = self
+            colorsColelctionView.delegate = self
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return colors.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "colorsCell", for: indexPath)
+        if let colorCell = cell as? ColorPickerCell{
+            colorCell.color = colors[indexPath.row]
+        }
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let cell = collectionView.cellForItem(at: indexPath), let custom = cell as? ColorPickerCell{
+            selectedColor = custom.color
+            custom.colorView.layer.borderWidth = 5.0
+            custom.colorView.layer.borderColor = customGreen().cgColor
+            hapticGenerator.impactOccurred()
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        if let cell = collectionView.cellForItem(at: indexPath), let custom = cell as? ColorPickerCell{
+            selectedColor = custom.color
+            custom.colorView.layer.borderWidth = 0
+            custom.colorView.layer.borderColor = UIColor.clear.cgColor
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let dest = segue.destination as? SceneViewController{
+            dest.selectedColor = selectedColor
+        }
+    }
+    
 }
 

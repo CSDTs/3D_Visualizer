@@ -28,13 +28,13 @@ class TwoDModelCollectionViewCell: UICollectionViewCell{
             }
         }
     }
-    
 }
 
 class TwoDModelCollectionViewController: UICollectionViewController {
     @IBOutlet weak var cellLoadingIndicator: UIActivityIndicatorView!
     //data structure representing the name, description, image link and web url
     var allData: [(String, String, String, String)] = []
+    var isColectionViewLoaded: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,6 +48,7 @@ class TwoDModelCollectionViewController: UICollectionViewController {
                 var dataEntry: (String, String, String, String)
                     = ("Unknown","Unknown","Unknown", "https://csdt.rpi.edu")
                 if let name = fetchedData["name"] as? String{
+                    if !isJsonEntryAProject(with: name) { continue }
                     dataEntry.0 = name.capitalized
                 }
                 if let descrip = fetchedData["description"] as? String{
@@ -57,7 +58,11 @@ class TwoDModelCollectionViewController: UICollectionViewController {
                     dataEntry.2 = imageURL
                 }
                 if let webLink = fetchedData["url"] as? String{
-                    dataEntry.3 = dataEntry.3 + webLink
+                    if webLink.contains("http"){
+                        dataEntry.3 = webLink
+                    } else {
+                        dataEntry.3 += webLink
+                    }
                 }
                 self.allData.append(dataEntry)
             }
@@ -69,7 +74,9 @@ class TwoDModelCollectionViewController: UICollectionViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        guard !isColectionViewLoaded else { return }
         setupCollectionViewLayout(with: collectionView, andSize: traitCollection.horizontalSizeClass)
+        isColectionViewLoaded = true
     }
 
     override func didReceiveMemoryWarning() {

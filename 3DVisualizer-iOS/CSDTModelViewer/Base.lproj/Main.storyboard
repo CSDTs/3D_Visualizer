@@ -76,7 +76,7 @@
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <segue destination="sT5-ga-4nh" kind="show" id="qN4-dP-Rga"/>
+                                    <segue destination="sT5-ga-4nh" kind="presentation" modalTransitionStyle="crossDissolve" id="qN4-dP-Rga"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -134,19 +134,17 @@
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="Uwr-3t-vN0">
-                                            <rect key="frame" x="56.5" y="35" width="262" height="73"/>
+                                            <rect key="frame" x="87.5" y="35" width="200" height="68.5"/>
                                             <subviews>
                                                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="edg-Th-uX0">
-                                                    <rect key="frame" x="0.0" y="0.0" width="262" height="29"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="200" height="29"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="28" id="3Qy-lh-NHi"/>
-                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="250" id="SeR-gg-pps"/>
                                                     </constraints>
                                                     <segments>
                                                         <segment title="Red"/>
                                                         <segment title="Orange"/>
                                                         <segment title="Green"/>
-                                                        <segment title="Yellow"/>
                                                     </segments>
                                                     <color key="tintColor" red="0.1333333333" green="0.41176470590000003" blue="0.027450980390000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <connections>
@@ -154,7 +152,7 @@
                                                     </connections>
                                                 </segmentedControl>
                                                 <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1000" minValue="0.0" maxValue="5000" translatesAutoresizingMaskIntoConstraints="NO" id="vZK-FQ-TdJ">
-                                                    <rect key="frame" x="-2" y="43" width="266" height="31"/>
+                                                    <rect key="frame" x="-2" y="43" width="204" height="26.5"/>
                                                     <color key="minimumTrackTintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <color key="thumbTintColor" red="0.1333333333" green="0.41176470590000003" blue="0.027450980390000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <connections>
@@ -163,8 +161,8 @@
                                                 </slider>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="width" secondItem="Uwr-3t-vN0" secondAttribute="height" multiplier="262:73" id="1P2-yB-DSO"/>
-                                                <constraint firstAttribute="width" constant="262" id="dzM-lB-aXO"/>
+                                                <constraint firstAttribute="width" secondItem="Uwr-3t-vN0" secondAttribute="height" multiplier="262:90" id="1P2-yB-DSO"/>
+                                                <constraint firstAttribute="width" constant="200" id="dzM-lB-aXO"/>
                                                 <constraint firstItem="edg-Th-uX0" firstAttribute="centerX" secondItem="Uwr-3t-vN0" secondAttribute="centerX" id="liO-5f-BSu"/>
                                             </constraints>
                                         </stackView>
@@ -186,11 +184,26 @@
                                                 <action selector="exitSceneView:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Xwq-48-bVQ"/>
                                             </connections>
                                         </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XOa-e5-9U7">
+                                            <rect key="frame" x="328" y="34" width="32" height="32"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="XOa-e5-9U7" secondAttribute="height" multiplier="1:1" id="RCm-Ik-9YY"/>
+                                            </constraints>
+                                            <color key="tintColor" red="0.1333333333" green="0.41176470590000003" blue="0.027450980390000001" alpha="1" colorSpace="calibratedRGB"/>
+                                            <state key="normal" image="paletteIcon"/>
+                                            <connections>
+                                                <segue destination="NDx-qt-NpF" kind="popoverPresentation" popoverAnchorView="XOa-e5-9U7" id="iGE-2N-Gpi">
+                                                    <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                                </segue>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="XOa-e5-9U7" secondAttribute="trailing" constant="15" id="1Bv-EV-a2J"/>
                                         <constraint firstItem="Uwr-3t-vN0" firstAttribute="top" secondItem="b6Y-ex-kHL" secondAttribute="top" constant="35" id="A2C-o4-qS1"/>
                                         <constraint firstItem="xQm-i6-obL" firstAttribute="top" secondItem="b6Y-ex-kHL" secondAttribute="top" constant="35" id="JZG-NE-ODT"/>
                                         <constraint firstItem="Uwr-3t-vN0" firstAttribute="centerX" secondItem="b6Y-ex-kHL" secondAttribute="centerX" id="Wq2-eb-8c2"/>
+                                        <constraint firstItem="XOa-e5-9U7" firstAttribute="top" secondItem="b6Y-ex-kHL" secondAttribute="top" constant="34" id="geL-Bg-y30"/>
                                         <constraint firstItem="xQm-i6-obL" firstAttribute="leading" secondItem="b6Y-ex-kHL" secondAttribute="leading" constant="15" id="glo-fq-UHv"/>
                                     </constraints>
                                 </view>
@@ -253,6 +266,7 @@
                     </view>
                     <connections>
                         <outlet property="ARButton" destination="03M-f7-KqS" id="LSi-Oi-TIP"/>
+                        <outlet property="colorSegments" destination="edg-Th-uX0" id="vZI-eL-Tb7"/>
                         <outlet property="intensitySlider" destination="vZK-FQ-TdJ" id="Oma-c8-HKA"/>
                         <outlet property="modelLoadingIndicator" destination="j0M-Ko-Pa6" id="FU8-rN-wdw"/>
                         <outlet property="sceneView" destination="wuT-3W-Cc6" id="nRv-Mj-gpX"/>
@@ -389,7 +403,7 @@
                                 <connections>
                                     <outlet property="artwork" destination="aSN-qz-W3F" id="Th9-k8-QQ7"/>
                                     <outlet property="artworkTitle" destination="A92-fr-EbA" id="6Ke-JL-451"/>
-                                    <segue destination="39T-IJ-XSO" kind="presentation" id="qBr-Pz-fOb"/>
+                                    <segue destination="39T-IJ-XSO" kind="presentation" modalTransitionStyle="crossDissolve" id="qBr-Pz-fOb"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -404,7 +418,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T6f-Ip-Fj8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-586" y="-931"/>
+            <point key="canvasLocation" x="-586.39999999999998" y="-931.48425787106453"/>
         </scene>
         <!--TwoD Specifics View Controller-->
         <scene sceneID="vba-4n-Pzs">
@@ -440,9 +454,13 @@
                                     <segue destination="tNc-x8-Nzf" kind="presentation" modalTransitionStyle="flipHorizontal" id="aRu-ht-MY6"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="ajm-x4-R5t">
+                                <rect key="frame" x="177.5" y="241" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="I9b-Pz-Pof" firstAttribute="bottom" relation="lessThanOrEqual" secondItem="ajm-x4-R5t" secondAttribute="bottom" constant="406" id="4IL-8M-XUL"/>
                             <constraint firstItem="3RT-8P-ITH" firstAttribute="leading" secondItem="aOU-Nh-5rQ" secondAttribute="leadingMargin" id="7qa-kF-RfB"/>
                             <constraint firstItem="3RT-8P-ITH" firstAttribute="top" secondItem="dpJ-p2-nxN" secondAttribute="bottom" id="WR2-YS-Rjk"/>
                             <constraint firstItem="3RT-8P-ITH" firstAttribute="trailing" secondItem="aOU-Nh-5rQ" secondAttribute="trailingMargin" id="XKe-MN-I3a"/>
@@ -450,8 +468,10 @@
                             <constraint firstItem="bQI-2s-Uw3" firstAttribute="centerX" secondItem="I9b-Pz-Pof" secondAttribute="centerX" id="leC-bp-8HF"/>
                             <constraint firstItem="3RT-8P-ITH" firstAttribute="centerX" secondItem="dpJ-p2-nxN" secondAttribute="centerX" id="oDZ-CN-4KQ"/>
                             <constraint firstItem="dpJ-p2-nxN" firstAttribute="leading" secondItem="I9b-Pz-Pof" secondAttribute="leading" id="sm3-TI-GbA"/>
+                            <constraint firstItem="ajm-x4-R5t" firstAttribute="centerX" secondItem="I9b-Pz-Pof" secondAttribute="centerX" id="uc1-a5-oUB"/>
                             <constraint firstItem="bQI-2s-Uw3" firstAttribute="top" secondItem="3RT-8P-ITH" secondAttribute="bottom" constant="34" id="wGo-q9-3oH"/>
                             <constraint firstItem="dpJ-p2-nxN" firstAttribute="top" secondItem="I9b-Pz-Pof" secondAttribute="top" id="xcS-4Z-ded"/>
+                            <constraint firstItem="ajm-x4-R5t" firstAttribute="top" secondItem="I9b-Pz-Pof" secondAttribute="top" constant="177" id="xod-Te-vrE"/>
                             <constraint firstItem="I9b-Pz-Pof" firstAttribute="bottom" secondItem="bQI-2s-Uw3" secondAttribute="bottom" constant="20" id="ygi-zy-SEd"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="I9b-Pz-Pof"/>
@@ -469,6 +489,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="imageLoadingIndicator" destination="ajm-x4-R5t" id="5Kf-nT-Om6"/>
                         <outlet property="specificsImage" destination="dpJ-p2-nxN" id="GUe-m3-BxK"/>
                         <outlet property="specificsTextView" destination="3RT-8P-ITH" id="Zkv-V1-ZT2"/>
                         <outlet property="viewARButton" destination="bQI-2s-Uw3" id="XxY-kF-boz"/>
@@ -518,12 +539,90 @@
                         </connections>
                     </tableView>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="show" identifier="3DModelListSegue" id="fv9-eC-Fz4"/>
+                        <segue destination="BYZ-38-t0r" kind="presentation" identifier="3DModelListSegue" modalTransitionStyle="crossDissolve" id="fv9-eC-Fz4"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dff-dS-se1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-586.39999999999998" y="-243.32833583208398"/>
+        </scene>
+        <!--Color Picker Collection View-->
+        <scene sceneID="OlO-56-Nyg">
+            <objects>
+                <viewController id="NDx-qt-NpF" customClass="ColorPickerCollectionView" customModule="CSDTModelViewer" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="n2N-c0-eHO">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="y5j-E2-uYy">
+                                <rect key="frame" x="50" y="11" width="309" height="78"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="7el-0V-ZFJ">
+                                    <size key="itemSize" width="78" height="78"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="colorsCell" id="v4v-eN-AKg" customClass="ColorPickerCell" customModule="CSDTModelViewer" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="78" height="78"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="78" height="78"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zuv-W6-760">
+                                                    <rect key="frame" x="0.0" y="0.0" width="78" height="78"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </view>
+                                            </subviews>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="zuv-W6-760" secondAttribute="trailing" id="CUo-Ls-8oq"/>
+                                            <constraint firstItem="zuv-W6-760" firstAttribute="top" secondItem="v4v-eN-AKg" secondAttribute="top" id="N9m-sG-xTc"/>
+                                            <constraint firstAttribute="bottom" secondItem="zuv-W6-760" secondAttribute="bottom" id="QYQ-WX-FeG"/>
+                                            <constraint firstItem="zuv-W6-760" firstAttribute="leading" secondItem="v4v-eN-AKg" secondAttribute="leading" id="rre-cY-GKX"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="colorView" destination="zuv-W6-760" id="TRN-Hz-eTN"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W8f-pX-YDo">
+                                <rect key="frame" x="10" y="34" width="32" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="W8f-pX-YDo" secondAttribute="height" multiplier="1:1" id="lij-Kd-YDd"/>
+                                    <constraint firstAttribute="height" constant="32" id="ze0-de-n35"/>
+                                </constraints>
+                                <color key="tintColor" red="0.1333333333" green="0.41176470590000003" blue="0.027450980390000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" image="yesIcon"/>
+                                <connections>
+                                    <segue destination="aZx-NI-hKC" kind="unwind" unwindAction="getColorFromPickerWith:" id="K2d-MJ-TBt"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="y5j-E2-uYy" firstAttribute="top" secondItem="QEY-Id-fzH" secondAttribute="top" constant="11" id="CFr-Gu-unD"/>
+                            <constraint firstItem="W8f-pX-YDo" firstAttribute="leading" secondItem="QEY-Id-fzH" secondAttribute="leading" constant="10" id="Seb-6N-NZW"/>
+                            <constraint firstItem="W8f-pX-YDo" firstAttribute="centerY" secondItem="QEY-Id-fzH" secondAttribute="centerY" id="StT-Je-Eqs"/>
+                            <constraint firstItem="QEY-Id-fzH" firstAttribute="trailing" secondItem="y5j-E2-uYy" secondAttribute="trailing" constant="16" id="XyT-P6-yPa"/>
+                            <constraint firstItem="y5j-E2-uYy" firstAttribute="leading" secondItem="QEY-Id-fzH" secondAttribute="leading" constant="50" id="ms4-LA-7Gj"/>
+                            <constraint firstItem="QEY-Id-fzH" firstAttribute="bottom" secondItem="y5j-E2-uYy" secondAttribute="bottom" constant="11" id="wTu-eV-Yc2"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="QEY-Id-fzH"/>
+                    </view>
+                    <value key="contentSizeForViewInPopover" type="size" width="375" height="100"/>
+                    <size key="freeformSize" width="375" height="100"/>
+                    <connections>
+                        <outlet property="colorsColelctionView" destination="y5j-E2-uYy" id="BZM-qe-uBD"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9CV-Yh-RD2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="aZx-NI-hKC" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="229.59999999999999" y="-359.82008995502252"/>
         </scene>
         <!--Augmented Reality View Controller-->
         <scene sceneID="Dhb-72-nOT">
@@ -629,14 +728,14 @@
         <!--Scene Settings-->
         <scene sceneID="gDT-IY-ijt">
             <objects>
-                <tableViewController id="ooK-Zh-o6R" customClass="SceneSettingsTableViewController" customModule="CSDTModelViewer" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="TWI-eO-kRT">
+                <tableViewController automaticallyAdjustsScrollViewInsets="NO" id="ooK-Zh-o6R" customClass="SceneSettingsTableViewController" customModule="CSDTModelViewer" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="TWI-eO-kRT">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="settingsCell" id="IFF-sT-l1c">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="IFF-sT-l1c" id="bai-cs-R1k">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -644,7 +743,7 @@
                                 </tableViewCellContentView>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="ARScale" textLabel="4CI-OP-Ibf" detailTextLabel="cdt-8l-6Qm" rowHeight="52" style="IBUITableViewCellStyleValue1" id="Jvf-za-522">
-                                <rect key="frame" x="0.0" y="72" width="375" height="52"/>
+                                <rect key="frame" x="0.0" y="99.5" width="375" height="52"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Jvf-za-522" id="5YY-lx-qIW">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="51.5"/>
@@ -668,7 +767,7 @@
                                 </tableViewCellContentView>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="settingsPickerCell" rowHeight="137" id="IMb-xV-sGW" customClass="SettingsPickerTableViewCell" customModule="CSDTModelViewer" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="124" width="375" height="137"/>
+                                <rect key="frame" x="0.0" y="151.5" width="375" height="137"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="IMb-xV-sGW" id="ssV-fy-jL9">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="136.5"/>
@@ -786,11 +885,13 @@
     <resources>
         <image name="backButton" width="32" height="32"/>
         <image name="gradient" width="500" height="200"/>
+        <image name="paletteIcon" width="32" height="32"/>
         <image name="settingsIcon" width="32" height="32"/>
         <image name="wigwam_background" width="2500" height="1854"/>
+        <image name="yesIcon" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="aRu-ht-MY6"/>
+        <segue reference="tMZ-Hj-rYz"/>
         <segue reference="inj-tq-Xef"/>
     </inferredMetricsTieBreakers>
 </document>

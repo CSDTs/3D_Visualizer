@@ -97,9 +97,9 @@ class SceneSettingsTableViewController: UITableViewController {
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return sectionTitles[section]
-    }
+//    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        return sectionTitles[section]
+//    }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.section{
@@ -149,6 +149,22 @@ class SceneSettingsTableViewController: UITableViewController {
             let rotationAxisPickerIndex = IndexPath(row: 1, section: 0)
             ARRotationAxis = (tableView.cellForRow(at: rotationAxisPickerIndex) as? SettingsPickerTableViewCell)?.selectedSetting ?? "X"
         }
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let width = UIScreen.main.bounds.width
+        let frame = CGRect(x: 0, y: 0, width: width, height: 50.0)
+        let header = SettingsHeader(frame: frame)
+        header.addLabel(with: sectionTitles[section])
+        return header
+    }
+
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 50.0
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return CGFloat.leastNormalMagnitude
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

@@ -35,7 +35,6 @@ enum animationSettings{
     case rotate
 }
 
-
 let stringToLightType: Dictionary<String, SCNLight.LightType> =
     ["Omnidirectional": .omni, "Ambient":.ambient, "Directional":.directional, "Probe": .probe, "Spot": .spot]
 let stringToBlendMode: Dictionary<String, SCNBlendMode> =
@@ -137,5 +136,19 @@ func setupCollectionViewLayout(with collectionView: UICollectionView?,
     layout.minimumInteritemSpacing = 0
     layout.minimumLineSpacing = 0
     layout.headerReferenceSize = CGSize(width: UIScreen.main.bounds.width, height: 27)
-    collectionView!.collectionViewLayout = layout
+    collectionView?.collectionViewLayout = layout
+}
+
+func isJsonEntryAProject(with name:String) -> Bool {
+    let filter:[String] = ["csdt","application", "blank", "test", "tutorial", "js","darwin"]
+    for item in filter{
+        if name.lowercased().contains(item) { return false }
+    }
+    return true
+}
+
+extension UIColor{
+    func rgb(r red:CGFloat, g green:CGFloat, b blue:CGFloat) -> UIColor{
+        return UIColor(red: red/255, green: green/255, blue: blue/255, alpha: 1)
+    }
 }
