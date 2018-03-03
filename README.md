@@ -1,5 +1,5 @@
 <p align="center">
-    <img width="500" height="500" src="3DVisualizer-iOS/CSDTModelViewer/Assets.xcassets/AppIcon.appiconset/3DVisualizerIconDesign-1024.png">
+    <img width="250" height="250" src="3DVisualizer-iOS/CSDTModelViewer/Assets.xcassets/AppIcon.appiconset/3DVisualizerIconDesign-1024.png">
 </p>
 
 # 3D_Visualizer_iOS
