@@ -28,6 +28,7 @@ class SceneViewController: UIViewController, UIPopoverPresentationControllerDele
     var ARModelScale: Float = 0.07
     var ARRotationAxis: String = "X"
     var selectedColor: UIColor = UIColor.clear
+    var IntensityOrTemperature = true
     
     override var preferredStatusBarStyle: UIStatusBarStyle{
         return .default
@@ -51,6 +52,7 @@ class SceneViewController: UIViewController, UIPopoverPresentationControllerDele
         modelLoadingIndicator.tintColor = UIColor.white
         modelLoadingIndicator.startAnimating()
         navigationController?.setNavigationBarHidden(true, animated: true)
+        colorSegments.selectedSegmentIndex = -1
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             if self?.customURL != "None"{
                 guard let url = URL(string: (self?.customURL)!) else {
@@ -142,7 +144,11 @@ class SceneViewController: UIViewController, UIPopoverPresentationControllerDele
     }
     
     @IBAction func changeLightIntensity(_ sender: UISlider) {
-        lightingControl.light?.intensity = CGFloat(sender.value)
+        if IntensityOrTemperature {
+            lightingControl.light?.intensity = CGFloat(sender.value)
+        } else {
+            lightingControl.light?.temperature = CGFloat(sender.value)
+        }
     }
     @IBAction func changeLightLocation(_ sender: UITapGestureRecognizer) {
         let ctr = sender.location(in: sceneView)
@@ -160,6 +166,12 @@ class SceneViewController: UIViewController, UIPopoverPresentationControllerDele
             animationMode = settings.selectedAnimationSetting
             ARModelScale = settings.ARModelScale
             ARRotationAxis = settings.ARRotationAxis
+            IntensityOrTemperature = settings.IntensityOrTemp
+            if IntensityOrTemperature{
+                lightingControl.light?.intensity = CGFloat(intensitySlider.value)
+            } else {
+                lightingControl.light?.temperature = CGFloat(intensitySlider.value)
+            }
         }
     }
     
@@ -179,6 +191,7 @@ class SceneViewController: UIViewController, UIPopoverPresentationControllerDele
             dest.animationMode = animationMode
             dest.ARModelScale = ARModelScale
             dest.ARRotationAxis = ARRotationAxis
+            dest.IntensityOrTemp = IntensityOrTemperature
         }
         if let dest = destinationViewController as? AugmentedRealityViewController{
             dest.model = modelObject
@@ -218,12 +231,19 @@ class ColorPickerCell: UICollectionViewCell{
             colorView.layer.cornerRadius = 39.0
         }
     }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        colorView.layer.borderWidth = 0
+        colorView.layer.borderColor = UIColor.clear.cgColor
+    }
 }
 
 class ColorPickerCollectionView: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource{
-    let colors: [UIColor] = [UIColor.black, UIColor.blue, UIColor.brown, UIColor.cyan, UIColor.purple,UIColor.gray,UIColor.yellow,                    UIColor.darkGray,UIColor.magenta, UIColor().rgb(r: 250, g: 190, b:190), UIColor().rgb(r: 210, g: 245, b:60), UIColor().rgb(r: 230, g: 190, b:255), UIColor().rgb(r: 255, g: 250, b:200), UIColor().rgb(r: 255, g: 215, b:180)]
+    let colors: [UIColor] = [UIColor.black, UIColor.blue, UIColor.brown, UIColor.cyan, UIColor.purple,UIColor.gray,UIColor.yellow, UIColor.darkGray,UIColor.magenta, UIColor.rgb(r: 250, g: 190, b:190), UIColor.rgb(r: 210, g: 245, b:60), UIColor.rgb(r: 230, g: 190, b:255), UIColor.rgb(r: 255, g: 250, b:200), UIColor.rgb(r: 255, g: 215, b:180)]
     var selectedColor: UIColor!
     let hapticGenerator = UIImpactFeedbackGenerator(style: .medium)
+    var selectedIndexPath: IndexPath?
     
     @IBOutlet weak var colorsColelctionView: UICollectionView! {
         didSet{
@@ -240,6 +260,10 @@ class ColorPickerCollectionView: UIViewController, UICollectionViewDelegate, UIC
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "colorsCell", for: indexPath)
         if let colorCell = cell as? ColorPickerCell{
             colorCell.color = colors[indexPath.row]
+            if indexPath == selectedIndexPath {
+                colorCell.colorView.layer.borderWidth = 5.0
+                colorCell.colorView.layer.borderColor = customGreen().cgColor
+            }
         }
         return cell
     }
@@ -250,12 +274,12 @@ class ColorPickerCollectionView: UIViewController, UICollectionViewDelegate, UIC
             custom.colorView.layer.borderWidth = 5.0
             custom.colorView.layer.borderColor = customGreen().cgColor
             hapticGenerator.impactOccurred()
+            selectedIndexPath = indexPath
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         if let cell = collectionView.cellForItem(at: indexPath), let custom = cell as? ColorPickerCell{
-            selectedColor = custom.color
             custom.colorView.layer.borderWidth = 0
             custom.colorView.layer.borderColor = UIColor.clear.cgColor
         }

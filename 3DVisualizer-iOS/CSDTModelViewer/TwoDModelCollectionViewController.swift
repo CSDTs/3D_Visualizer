@@ -28,6 +28,11 @@ class TwoDModelCollectionViewCell: UICollectionViewCell{
             }
         }
     }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.artwork.image = nil
+    }
 }
 
 class TwoDModelCollectionViewController: UICollectionViewController {
@@ -40,36 +45,38 @@ class TwoDModelCollectionViewController: UICollectionViewController {
         super.viewDidLoad()
         cellLoadingIndicator.startAnimating()
         
-        Alamofire.request("https://csdt.rpi.edu/api/application/").responseJSON { response in
+        Alamofire.request("https://csdt.rpi.edu/api/projects/").responseJSON { response in
             guard let data = response.data else { return }
             let jsonData = try? JSONSerialization.jsonObject(with: data, options: [])
             
             for fetchedData in jsonData as! [Dictionary<String, Any>]{
                 var dataEntry: (String, String, String, String)
                     = ("Unknown","Unknown","Unknown", "https://csdt.rpi.edu")
+                if let id = fetchedData["application"] as? Int {
+                    guard id == 38 else { continue }
+                }
                 if let name = fetchedData["name"] as? String{
-                    if !isJsonEntryAProject(with: name) { continue }
                     dataEntry.0 = name.capitalized
                 }
                 if let descrip = fetchedData["description"] as? String{
                     dataEntry.1 = descrip
                 }
-                if let imageURL = fetchedData["screenshot"] as? String{
-                    dataEntry.2 = imageURL
+                if let imageURL = fetchedData["screenshot_url"] as? String{
+                    dataEntry.2 = "https://csdt.rpi.edu" + imageURL
                 }
-                if let webLink = fetchedData["url"] as? String{
-                    if webLink.contains("http"){
-                        dataEntry.3 = webLink
-                    } else {
-                        dataEntry.3 += webLink
-                    }
-                }
+//                if let webLink = fetchedData["url"] as? String{
+//                    if webLink.contains("http"){
+//                        dataEntry.3 = webLink
+//                    } else {
+//                        dataEntry.3 += webLink
+//                    }
+//                }
+                dataEntry.3 = "https://csdt.rpi.edu/"
                 self.allData.append(dataEntry)
             }
             self.collectionView?.reloadData()
             self.cellLoadingIndicator.stopAnimating()
         }
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -77,6 +84,13 @@ class TwoDModelCollectionViewController: UICollectionViewController {
         guard !isColectionViewLoaded else { return }
         setupCollectionViewLayout(with: collectionView, andSize: traitCollection.horizontalSizeClass)
         isColectionViewLoaded = true
+        NotificationCenter.default.addObserver(forName: Notification.Name.UIDeviceOrientationDidChange, object: UIApplication.shared, queue: OperationQueue.main) { _ in
+            setupCollectionViewLayout(with: self.collectionView, andSize: self.traitCollection.horizontalSizeClass)
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(self, name: Notification.Name.UIDeviceOrientationDidChange, object: nil)
     }
 
     override func didReceiveMemoryWarning() {

@@ -11,18 +11,18 @@ import Alamofire
 
 class ModelPickerViewController: UIViewController {
     var customURL: String! = "None"
-    let defaultURL = "http://thingiverse-production-new.s3.amazonaws.com/assets/c4/4c/76/de/9b/jordanb.stl"
+    let defaultURL = "https://github.com/nealrs/CADViewer/raw/gh-pages/models/tsa.stl"
     @IBOutlet weak var customURLButton: UIButton!
     @IBOutlet weak var defaultURLButton: UIButton!
     @IBOutlet weak var listButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        customURLButton.layer.cornerRadius = 15.0
+        customURLButton.layer.cornerRadius = 30.0
         customURLButton.clipsToBounds = true
-        defaultURLButton.layer.cornerRadius = 15.0
+        defaultURLButton.layer.cornerRadius = 30.0
         defaultURLButton.clipsToBounds = true
-        listButton.layer.cornerRadius = 15.0
+        listButton.layer.cornerRadius = 30.0
         listButton.clipsToBounds = true
     }
 

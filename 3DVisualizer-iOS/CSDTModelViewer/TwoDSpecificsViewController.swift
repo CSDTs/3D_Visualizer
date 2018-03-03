@@ -15,7 +15,7 @@ class TwoDSpecificsViewController: UIViewController {
     @IBOutlet weak var viewARButton: UIButton!
     @IBOutlet weak var imageLoadingIndicator: UIActivityIndicatorView!
     var specificData: (String, String, String, String)!
-    var isFullyLoaded = false
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,7 +34,6 @@ class TwoDSpecificsViewController: UIViewController {
                 DispatchQueue.main.async {
                     self?.specificsImage.image = image
                     self?.specificsImage.clipsToBounds = true
-                    self?.isFullyLoaded = true
                     self?.imageLoadingIndicator.stopAnimating()
                 }
             }
@@ -47,7 +46,6 @@ class TwoDSpecificsViewController: UIViewController {
     }
     
     @IBAction func dismissDetails(_ sender: UIBarButtonItem) {
-        guard isFullyLoaded else { return }
         dismiss(animated: true, completion: nil)
     }
     

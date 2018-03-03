@@ -139,16 +139,13 @@ func setupCollectionViewLayout(with collectionView: UICollectionView?,
     collectionView?.collectionViewLayout = layout
 }
 
-func isJsonEntryAProject(with name:String) -> Bool {
-    let filter:[String] = ["csdt","application", "blank", "test", "tutorial", "js","darwin"]
-    for item in filter{
-        if name.lowercased().contains(item) { return false }
-    }
-    return true
-}
-
 extension UIColor{
-    func rgb(r red:CGFloat, g green:CGFloat, b blue:CGFloat) -> UIColor{
+    class func rgb(r red:CGFloat, g green:CGFloat, b blue:CGFloat) -> UIColor{
         return UIColor(red: red/255, green: green/255, blue: blue/255, alpha: 1)
     }
 }
+
+extension Notification.Name{
+    static let onLightSwitchChange = Notification.Name("on-light-switch-change")
+}
+

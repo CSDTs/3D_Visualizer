@@ -1,3 +1,7 @@
+<p align="center">
+    <img width="500" height="500" src="3DVisualizer-iOS/CSDTModelViewer/Assets.xcassets/AppIcon.appiconset/3DVisualizerIconDesign-1024.png">
+</p>
+
 # 3D_Visualizer_iOS
 This is an iOS application for visualizing 3D CAD models, created using SceneKit, Model I/O and ARKit.
 
@@ -5,7 +9,7 @@ This is an iOS application for visualizing 3D CAD models, created using SceneKit
 
 ### Fetch Models
 *  Fetch the models using a valid web link or use the default wigwam model. If the link is invalid, the application will fall back to using the default wigwam model.
-* Pick a model from the 3D/2D list. For 2D, the app presents a grid-like layout displaying all the images of projects fetched from the applications API from CSDT. The user can view the image in detail and display the image using AR.
+* Pick a model from the 3D/2D list. For 2D, the app presents a grid-like layout displaying all the images of projects fetched from the projects API from CSDT. The user can view the image in detail and display the image using AR.
 
 ### Manupulate models with SceneKit
 * Zoom, move and rotate model with gestures
@@ -19,6 +23,7 @@ This is an iOS application for visualizing 3D CAD models, created using SceneKit
     * Pick from light types: omnidirectional, directional, probe, spot or ambient
     * Pick from blend modes: add, alpha, multiply, subtract, screen or replace
     * Animations! Choose from no animation or infinite rotation
+    * Change the slider behavior: changing light intensity or color temperature
 
 Relevant code needed to set up SceneKit - obtained from WWDC Presentation
 

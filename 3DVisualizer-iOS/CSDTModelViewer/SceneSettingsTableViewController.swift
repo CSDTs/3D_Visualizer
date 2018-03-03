@@ -11,9 +11,11 @@ import UIKit
 class SceneSettingsTableViewController: UITableViewController {
     let allSettings: [[String]] = [["AR Model Scale", "Rotation Axis"],
                                    ["Ambient", "Directional", "Omnidirectional", "Probe", "Spot"],
+                                   ["On: Intensity, Off: Temperature"],
                                    ["Add","Alpha", "Multiply", "Subtract", "Screen", "Replace"],
                                    ["None", "Rotate"]]
-    let sectionTitles: [String] = ["AR Settings","Light Settings", "Blend Mode Settings", "Animation Settings"]
+    let sectionTitles: [String] = ["AR Settings","Light Settings",
+                                   "Sliding Slider Changes The ... of Light","Blend Mode Settings", "Animation Settings"]
     let impactGenerator = UIImpactFeedbackGenerator(style: .medium)
     
     var lightSettings: String!
@@ -27,6 +29,7 @@ class SceneSettingsTableViewController: UITableViewController {
     var animationMode: animationSettings!
     var ARModelScale:Float!
     var ARRotationAxis: String!
+    var IntensityOrTemp = true
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,7 +58,6 @@ class SceneSettingsTableViewController: UITableViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 && indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ARScale", for: indexPath)
@@ -71,7 +73,16 @@ class SceneSettingsTableViewController: UITableViewController {
             }
             return cell
         }
-        let cell = tableView.dequeueReusableCell(withIdentifier: "settingsCell", for: indexPath)
+        if indexPath.section == 2{
+            let cell = tableView.dequeueReusableCell(withIdentifier: "switchCell", for: indexPath)
+            if let switchedCell = cell as? SwitchTableViewCell{
+                switchedCell.switchStatus = IntensityOrTemp
+                switchedCell.descriptor = allSettings[indexPath.section][indexPath.row]
+            }
+            return cell
+        }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "settingsCell", for: indexPath) as? BasicCell
+            else { return tableView.dequeueReusableCell(withIdentifier: "settingsCell", for: indexPath) }
         switch indexPath.section{
         case 1:
             if lightSettings == allSettings[indexPath.section][indexPath.row]{
@@ -79,13 +90,13 @@ class SceneSettingsTableViewController: UITableViewController {
                 cell.accessoryType = .checkmark
             }
             cell.textLabel?.text = allSettings[indexPath.section][indexPath.row]
-        case 2:
+        case 3:
             if blendSettings == allSettings[indexPath.section][indexPath.row]{
                 prevBlendIndex = indexPath
                 cell.accessoryType = .checkmark
             }
             cell.textLabel?.text = allSettings[indexPath.section][indexPath.row]
-        case 3:
+        case 4:
             let curr = allSettings[indexPath.section][indexPath.row]
             if ((animationMode == animationSettings.none && curr == "None") || (animationMode == .rotate && curr == "Rotate")) {
                 prevAnimationIndex = indexPath
@@ -120,14 +131,16 @@ class SceneSettingsTableViewController: UITableViewController {
         case 1:
             tableView.cellForRow(at: prevLightIndex)?.accessoryType = .none
             selectedLightSetting = allSettings[indexPath.section][indexPath.row]
+            lightSettings = allSettings[indexPath.section][indexPath.row]
             prevLightIndex = indexPath
             tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
-        case 2:
+        case 3:
             tableView.cellForRow(at: prevBlendIndex)?.accessoryType = .none
             selectedBlendSetting = allSettings[indexPath.section][indexPath.row]
+            blendSettings = allSettings[indexPath.section][indexPath.row]
             prevBlendIndex = indexPath
             tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
-        case 3:
+        case 4:
             tableView.cellForRow(at: prevAnimationIndex)?.accessoryType = .none
             switch allSettings[indexPath.section][indexPath.row]{
             case "None":
@@ -136,6 +149,7 @@ class SceneSettingsTableViewController: UITableViewController {
                 selectedAnimationSetting = .rotate
             default: break
             }
+            animationMode = selectedAnimationSetting
             prevAnimationIndex = indexPath
             tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
         default:break
@@ -148,6 +162,8 @@ class SceneSettingsTableViewController: UITableViewController {
         if let _ = segue.destination as? SceneViewController{
             let rotationAxisPickerIndex = IndexPath(row: 1, section: 0)
             ARRotationAxis = (tableView.cellForRow(at: rotationAxisPickerIndex) as? SettingsPickerTableViewCell)?.selectedSetting ?? "X"
+            let lightIndex = IndexPath(row: 0, section: 2)
+            IntensityOrTemp = ((tableView.cellForRow(at: lightIndex)) as? SwitchTableViewCell)?.switchStatus ?? IntensityOrTemp
         }
     }
     
@@ -174,5 +190,31 @@ class SceneSettingsTableViewController: UITableViewController {
         }
         return UITableViewAutomaticDimension
     }
-
 }
+
+class SwitchTableViewCell: UITableViewCell{
+    @IBOutlet weak var switchLabel: UILabel!
+    @IBOutlet weak var switchControl: UISwitch!
+    var switchStatus: Bool!
+    var descriptor: String!{
+        didSet{
+            switchLabel.text = descriptor
+            if switchStatus {
+                switchControl.isOn = true
+            } else {
+                switchControl.isOn = false
+            }
+        }
+    }
+    
+    @IBAction func switchTriggered(_ sender: UISwitch) {
+        switchStatus = sender.isOn
+    }
+}
+
+class BasicCell: UITableViewCell{
+    override func prepareForReuse() {
+        self.accessoryType = .none
+    }
+}
+
