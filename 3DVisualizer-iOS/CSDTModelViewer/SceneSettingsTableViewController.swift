@@ -108,10 +108,6 @@ class SceneSettingsTableViewController: UITableViewController {
         return cell
     }
     
-//    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        return sectionTitles[section]
-//    }
-    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.section{
         case 0:
@@ -167,12 +163,16 @@ class SceneSettingsTableViewController: UITableViewController {
         }
     }
     
-    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let width = UIScreen.main.bounds.width
-        let frame = CGRect(x: 0, y: 0, width: width, height: 50.0)
-        let header = SettingsHeader(frame: frame)
-        header.addLabel(with: sectionTitles[section])
-        return header
+//    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        let width = UIScreen.main.bounds.width
+//        let frame = CGRect(x: 0, y: 0, width: width, height: 50.0)
+//        let header = SettingsHeader(frame: frame)
+//        header.addLabel(with: sectionTitles[section])
+//        return header
+//    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return sectionTitles[section]
     }
 
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

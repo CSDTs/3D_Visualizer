@@ -34,10 +34,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wigwam_background" translatesAutoresizingMaskIntoConstraints="NO" id="NaW-Oo-5zY">
-                                <rect key="frame" x="0.0" y="0.0" width="374" height="667"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="O2b-fa-RcC">
-                                <rect key="frame" x="70.5" y="210" width="235.5" height="318"/>
+                                <rect key="frame" x="70" y="210" width="235.5" height="318"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nSa-As-E8O">
                                         <rect key="frame" x="0.0" y="0.0" width="235.5" height="56"/>
@@ -420,9 +420,6 @@
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dpJ-p2-nxN">
                                 <rect key="frame" x="0.0" y="64" width="375" height="375"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="dpJ-p2-nxN" secondAttribute="height" multiplier="25:25" id="rgt-5L-njY"/>
-                                </constraints>
                             </imageView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do " textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="3RT-8P-ITH">
                                 <rect key="frame" x="16" y="439" width="343" height="129"/>
@@ -457,6 +454,7 @@
                             <constraint firstItem="I9b-Pz-Pof" firstAttribute="trailing" secondItem="dpJ-p2-nxN" secondAttribute="trailing" id="iC6-qh-NIv"/>
                             <constraint firstItem="bQI-2s-Uw3" firstAttribute="centerX" secondItem="I9b-Pz-Pof" secondAttribute="centerX" id="leC-bp-8HF"/>
                             <constraint firstItem="3RT-8P-ITH" firstAttribute="centerX" secondItem="dpJ-p2-nxN" secondAttribute="centerX" id="oDZ-CN-4KQ"/>
+                            <constraint firstItem="I9b-Pz-Pof" firstAttribute="bottom" secondItem="dpJ-p2-nxN" secondAttribute="bottom" constant="228" id="rCN-MX-L5r"/>
                             <constraint firstItem="dpJ-p2-nxN" firstAttribute="leading" secondItem="I9b-Pz-Pof" secondAttribute="leading" id="sm3-TI-GbA"/>
                             <constraint firstItem="ajm-x4-R5t" firstAttribute="centerX" secondItem="I9b-Pz-Pof" secondAttribute="centerX" id="uc1-a5-oUB"/>
                             <constraint firstItem="bQI-2s-Uw3" firstAttribute="top" secondItem="3RT-8P-ITH" secondAttribute="bottom" constant="34" id="wGo-q9-3oH"/>

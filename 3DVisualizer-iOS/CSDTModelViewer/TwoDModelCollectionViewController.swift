@@ -23,6 +23,8 @@ class TwoDModelCollectionViewCell: UICollectionViewCell{
                     DispatchQueue.main.async {
                         self?.artwork.contentMode = .scaleAspectFill
                         self?.artwork.image = image
+                        self?.artwork.layer.borderWidth = 0.375
+                        self?.artwork.layer.borderColor = UIColor.darkGray.cgColor
                     }
                 }
             }
@@ -44,8 +46,17 @@ class TwoDModelCollectionViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         cellLoadingIndicator.startAnimating()
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
         
         Alamofire.request("https://csdt.rpi.edu/api/projects/").responseJSON { response in
+            guard response.result.isSuccess else {
+                let alert = UIAlertController(title: "Network Fetch Failed", message: "Data could not be fetched. Check your internet connection", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default , handler: nil))
+                alert.view.tintColor = customGreen()
+                self.present(alert, animated: true, completion: nil)
+                self.cellLoadingIndicator.stopAnimating()
+                return
+            }
             guard let data = response.data else { return }
             let jsonData = try? JSONSerialization.jsonObject(with: data, options: [])
             
@@ -76,6 +87,7 @@ class TwoDModelCollectionViewController: UICollectionViewController {
             }
             self.collectionView?.reloadData()
             self.cellLoadingIndicator.stopAnimating()
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
         }
     }
     
@@ -84,13 +96,20 @@ class TwoDModelCollectionViewController: UICollectionViewController {
         guard !isColectionViewLoaded else { return }
         setupCollectionViewLayout(with: collectionView, andSize: traitCollection.horizontalSizeClass)
         isColectionViewLoaded = true
-        NotificationCenter.default.addObserver(forName: Notification.Name.UIDeviceOrientationDidChange, object: UIApplication.shared, queue: OperationQueue.main) { _ in
-            setupCollectionViewLayout(with: self.collectionView, andSize: self.traitCollection.horizontalSizeClass)
-        }
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        NotificationCenter.default.removeObserver(self, name: Notification.Name.UIDeviceOrientationDidChange, object: nil)
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        // adjust cell size when screen rotates
+        guard let flowLayout = self.collectionView?.collectionViewLayout as? UICollectionViewFlowLayout else { return }
+        let width = size.width//collectionView?.bounds.width ?? UIScreen.main.bounds.width
+        let widthFactor: CGFloat = (self.traitCollection.horizontalSizeClass == .compact) ? 2.0 : 3.0
+        let heightFactor: CGFloat = (self.traitCollection.horizontalSizeClass == .compact) ? 1.71 : 3.0
+        flowLayout.itemSize = CGSize(width: width / widthFactor, height: width / heightFactor)// 2.05 & 1.75
+        if size.width < UIScreen.main.bounds.width / 3 {
+            flowLayout.itemSize = CGSize(width: size.width, height: size.width)// 2.05 & 1.75
+        }
+        flowLayout.invalidateLayout()
     }
 
     override func didReceiveMemoryWarning() {

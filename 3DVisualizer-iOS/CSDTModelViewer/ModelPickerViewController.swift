@@ -39,7 +39,7 @@ class ModelPickerViewController: UIViewController {
     }
     
     @IBAction func customURLSegue(_ sender: UIButton) {
-        let alert = UIAlertController(title: "Enter Model URL", message: nil, preferredStyle: .alert)
+        let alert = UIAlertController(title: "Enter Model URL", message: "Enter a url containing a 3D model", preferredStyle: .alert)
         alert.addTextField{ textField in
             textField.text = self.defaultURL
         }
