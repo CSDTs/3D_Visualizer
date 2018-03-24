@@ -28,7 +28,7 @@
         <!--Model Picker View Controller-->
         <scene sceneID="g0N-rm-xvw">
             <objects>
-                <viewController id="rBS-fg-TB5" customClass="ModelPickerViewController" customModule="CSDTModelViewer" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="picker" id="rBS-fg-TB5" customClass="ModelPickerViewController" customModule="CSDTModelViewer" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="6Y5-RO-uaK">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -105,7 +105,7 @@
         <!--Scene View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="SceneViewController" customModule="CSDTModelViewer" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="sceneViewController" id="BYZ-38-t0r" customClass="SceneViewController" customModule="CSDTModelViewer" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -920,7 +920,7 @@
         <image name="yesIcon" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="aRu-ht-MY6"/>
+        <segue reference="tMZ-Hj-rYz"/>
         <segue reference="inj-tq-Xef"/>
     </inferredMetricsTieBreakers>
 </document>

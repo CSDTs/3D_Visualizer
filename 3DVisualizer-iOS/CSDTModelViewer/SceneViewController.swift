@@ -29,6 +29,7 @@ class SceneViewController: UIViewController, UIPopoverPresentationControllerDele
     var ARRotationAxis: String = "X"
     var selectedColor: UIColor = UIColor.clear
     var IntensityOrTemperature = true
+    var isFromWeb = false
     
     override var preferredStatusBarStyle: UIStatusBarStyle{
         return .default
@@ -55,16 +56,16 @@ class SceneViewController: UIViewController, UIPopoverPresentationControllerDele
         colorSegments.selectedSegmentIndex = -1
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             if self?.customURL != "None"{
+                if !(self?.isFromWeb)! { self?.customURL = "file://" + (self?.customURL ?? "") }
                 guard let url = URL(string: (self?.customURL)!) else {
                     fatalError("failed to open model file")
                 }
                 DispatchQueue.main.async { self?.modelAsset = MDLAsset(url: url) }
             } else {
-                let url = Bundle.main.url(forResource: "wigwaam", withExtension: "stl")!
+                let url = Bundle.main.url(forResource: "Models/AnishinaabeArcs", withExtension: "stl")!
                 DispatchQueue.main.async { self?.modelAsset = MDLAsset(url: url)}
                 self?.ARModelScale = 0.002
             }
-            
         }
         // hides the ar button if Augmented Reality is not supported on the device.
         if !ARWorldTrackingConfiguration.isSupported {
@@ -72,11 +73,43 @@ class SceneViewController: UIViewController, UIPopoverPresentationControllerDele
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // ask the user to save / not save the 3d model on device
+        if UserDefaults.standard.bool(forKey: "ThirdPartyLaunch"){
+            let saveAlert = UIAlertController(title: "Save Model on Device?", message: "If so, enter the name of model in the text field, with no whitespaces. Make sure that the file name ends with extension .stl .", preferredStyle: .alert)
+            saveAlert.addTextField { textfield in
+                textfield.text = ""
+            }
+            let dontSaveAction = UIAlertAction(title: "Don't Save", style: .cancel, handler: nil)
+            let saveAction = UIAlertAction(title: "Save", style: .default){ _ in
+                guard let fileName = saveAlert.textFields![0].text else { return }
+                // now save to file system
+                let fileManager = FileManager.default
+                do {
+                    let directory = try fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+                    let fileURL = directory.appendingPathComponent(fileName)
+                    let modelData =  try Data(contentsOf: URL(string: self.customURL)!)
+                    try modelData.write(to: fileURL)
+                    overlayTextWithVisualEffect(using: "Success", on: self.view)
+                } catch {
+                    overlayTextWithVisualEffect(using: "\(error)", on: self.view)
+                }
+            }
+            saveAlert.view.tintColor = customGreen()
+            saveAlert.addAction(dontSaveAction)
+            saveAlert.addAction(saveAction)
+            self.present(saveAlert, animated: true, completion: nil)
+            UserDefaults.standard.set(false, forKey: "ThirdPartyLaunch")
+        }
+    }
+    
     fileprivate func setUp(){
         if let object = modelAsset.object(at: 0) as? MDLMesh { // valid model object from link
             modelObject = object
         } else { // invalid model, fall back to default model
-            let url = Bundle.main.url(forResource: "wigwaam", withExtension: "stl")!
+            let url = Bundle.main.url(forResource: "Models/AnishinaabeArcs", withExtension: "stl")!
+            print("Official URL + \(url)")
             let asset = MDLAsset(url: url)
             modelObject = asset.object(at: 0) as! MDLMesh
             let alertController = UIAlertController(title: "Error",
@@ -113,13 +146,6 @@ class SceneViewController: UIViewController, UIPopoverPresentationControllerDele
         cameraNode.position = SCNVector3Make(50, 50, 50)
         scene.rootNode.addChildNode(cameraNode)
         
-//        let floor = SCNFloor()
-//        floor.reflectionFalloffEnd = 10
-//        floor.reflectivity = 0.8
-//        let floorNode = SCNNode(geometry: floor)
-//        floorNode.position = SCNVector3(x: 0, y: -10.0, z: 0)
-//        scene.rootNode.addChildNode(floorNode)
-        
         sceneView.autoenablesDefaultLighting = true
         sceneView.allowsCameraControl = true
         sceneView.scene = scene
@@ -150,6 +176,7 @@ class SceneViewController: UIViewController, UIPopoverPresentationControllerDele
             lightingControl.light?.temperature = CGFloat(sender.value)
         }
     }
+    
     @IBAction func changeLightLocation(_ sender: UITapGestureRecognizer) {
         let ctr = sender.location(in: sceneView)
         lightingControl.position = SCNVector3Make(Float(ctr.x), Float(ctr.y), 100)

@@ -15,6 +15,7 @@ class ModelPickerViewController: UIViewController {
     @IBOutlet weak var customURLButton: UIButton!
     @IBOutlet weak var defaultURLButton: UIButton!
     @IBOutlet weak var listButton: UIButton!
+    var isThirdPartyOpen = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,6 +25,14 @@ class ModelPickerViewController: UIViewController {
         defaultURLButton.clipsToBounds = true
         listButton.layer.cornerRadius = 30.0
         listButton.clipsToBounds = true
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if UserDefaults.standard.bool(forKey: "ThirdPartyLaunch"){
+            isThirdPartyOpen = true
+            DispatchQueue.main.async { self.performSegue(withIdentifier: "donePickingModel", sender: self)}
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -61,7 +70,12 @@ class ModelPickerViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let dest = segue.destination as? SceneViewController{
             if customURL != "None"{
+                dest.isFromWeb = true
                 dest.customURL = customURL
+            }
+            if isThirdPartyOpen{
+                dest.customURL = UserDefaults.standard.url(forKey: "OpenedModel")!.path
+                isThirdPartyOpen = false
             }
         }
     }

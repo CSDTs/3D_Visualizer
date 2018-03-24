@@ -14,7 +14,7 @@
 		044727112023C64C003A9095 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0447270F2023C64C003A9095 /* Main.storyboard */; };
 		044727132023C64C003A9095 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 044727122023C64C003A9095 /* Assets.xcassets */; };
 		044727162023C64C003A9095 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 044727142023C64C003A9095 /* LaunchScreen.storyboard */; };
-		044727202023D3BF003A9095 /* wigwaam.stl in Resources */ = {isa = PBXBuildFile; fileRef = 0447271F2023D3BF003A9095 /* wigwaam.stl */; };
+		044E8F462066C04D00A2FD1A /* Models in Resources */ = {isa = PBXBuildFile; fileRef = 044E8F452066C04D00A2FD1A /* Models */; };
 		045B39092026327800E3BA39 /* AugmentedRealityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045B39082026327800E3BA39 /* AugmentedRealityViewController.swift */; };
 		047A8DF22037A4590066521A /* MasterListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047A8DF12037A4590066521A /* MasterListViewController.swift */; };
 		047A8DF62037CAED0066521A /* ThreeDModelListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047A8DF52037CAED0066521A /* ThreeDModelListTableViewController.swift */; };
@@ -37,7 +37,7 @@
 		044727122023C64C003A9095 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		044727152023C64C003A9095 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		044727172023C64C003A9095 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0447271F2023D3BF003A9095 /* wigwaam.stl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = wigwaam.stl; sourceTree = "<group>"; };
+		044E8F452066C04D00A2FD1A /* Models */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Models; sourceTree = "<group>"; };
 		045B39082026327800E3BA39 /* AugmentedRealityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AugmentedRealityViewController.swift; sourceTree = "<group>"; };
 		047A8DF12037A4590066521A /* MasterListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterListViewController.swift; sourceTree = "<group>"; };
 		047A8DF52037CAED0066521A /* ThreeDModelListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreeDModelListTableViewController.swift; sourceTree = "<group>"; };
@@ -93,7 +93,7 @@
 		0447270A2023C64C003A9095 /* CSDTModelViewer */ = {
 			isa = PBXGroup;
 			children = (
-				0447271F2023D3BF003A9095 /* wigwaam.stl */,
+				044E8F452066C04D00A2FD1A /* Models */,
 				0447270B2023C64C003A9095 /* AppDelegate.swift */,
 				0447270D2023C64C003A9095 /* SceneViewController.swift */,
 				0420FFAC2025021600FCA0EB /* SceneSettingsTableViewController.swift */,
@@ -153,6 +153,9 @@
 		044727002023C64C003A9095 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				KnownAssetTags = (
+					New,
+				);
 				LastSwiftUpdateCheck = 0920;
 				LastUpgradeCheck = 0920;
 				ORGANIZATIONNAME = "Jing Wei Li";
@@ -186,9 +189,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				044E8F462066C04D00A2FD1A /* Models in Resources */,
 				044727162023C64C003A9095 /* LaunchScreen.storyboard in Resources */,
 				04DFE45720412AAD00AB8FBF /* SettingsHeaderView.xib in Resources */,
-				044727202023D3BF003A9095 /* wigwaam.stl in Resources */,
 				044727132023C64C003A9095 /* Assets.xcassets in Resources */,
 				044727112023C64C003A9095 /* Main.storyboard in Resources */,
 			);
