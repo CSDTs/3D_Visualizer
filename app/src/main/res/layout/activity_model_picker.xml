@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="edu.rpi.httpscsdt.a3d_visualizer_android.ModelPickerActivity">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/wigwam"
+            android:contentDescription="Wigwam Background"
+            android:scaleType="centerInside"
+            tools:ignore="HardcodedText" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/WelcomeText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/welcome"
+                android:textColor="#3cff00"
+                android:textSize="40sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.27" />
+
+            <Button
+                android:layout_marginTop="50sp"
+                android:layout_width="200sp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Use Custom URL"
+                android:background="#3cff00"
+                tools:ignore="HardcodedText" />
+
+            <Button
+                android:layout_marginTop="30sp"
+                android:layout_width="200sp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Use Default Model"
+                android:background="#3cff00"
+                tools:ignore="HardcodedText" />
+
+            <Button
+                android:layout_marginTop="30sp"
+                android:layout_width="200sp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Pick From List"
+                android:background="#3cff00"
+                tools:ignore="HardcodedText" />
+        </LinearLayout>
+
+
+    </RelativeLayout>
+</android.support.constraint.ConstraintLayout>
