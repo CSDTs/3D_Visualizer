@@ -8,13 +8,15 @@
 
 import UIKit
 import SceneKit
+import Alamofire
 
-class TwoDSpecificsViewController: UIViewController {
+class TwoDSpecificsViewController: UIViewController, XMLParserDelegate {
     @IBOutlet weak var specificsImage: UIImageView!
     @IBOutlet weak var specificsTextView: UITextView!
     @IBOutlet weak var viewARButton: UIButton!
     @IBOutlet weak var imageLoadingIndicator: UIActivityIndicatorView!
-    var specificData: (String, String, String, String)!
+    var specificData: (String, String, String, String, String)!
+    var ARModelLink = ""
 
     
     override func viewDidLoad() {
@@ -38,8 +40,31 @@ class TwoDSpecificsViewController: UIViewController {
                 }
             }
         }
+        
+        DispatchQueue.global(qos: .userInteractive).async {
+            Alamofire.request(self.specificData.4).response{ response in
+                if let _ = response.error {
+                    return
+                }
+                if let data = response.data{
+                    let parser = XMLParser(data: data)
+                    parser.delegate = self
+                    guard parser.parse() else { return }
+                }
+            }
+        }
     }
-
+    
+    func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]) {
+        if elementName == "STL"{
+            let val = attributeDict["href"]
+            guard val != "" else { return }
+            ARModelLink = "https://csdt.rpi.edu" + (val ?? "")
+            viewARButton.setTitle("View in 3D", for: .normal)
+            parser.abortParsing() // no need to continue parsing since we already have what we need
+        }
+    }
+        
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -51,6 +76,16 @@ class TwoDSpecificsViewController: UIViewController {
     
     @IBAction func openModelLink(_ sender: UIBarButtonItem) {
         UIApplication.shared.open(URL(string: specificData.3)!, options: [:], completionHandler: nil)
+    }
+    
+    @IBAction func modelARSegue(_ sender: UIButton) {
+        DispatchQueue.main.async {
+            if self.ARModelLink == "" { // 2d segue
+                self.performSegue(withIdentifier: "flatImageSegue", sender: self)
+            } else { // 3d segue
+                self.performSegue(withIdentifier: "stlSegue", sender: self)
+            }
+        }
     }
     
     // MARK: - Navigation
@@ -70,6 +105,9 @@ class TwoDSpecificsViewController: UIViewController {
             dest.lightColor = UIColor.white
             dest.modelScale = 0.002
             dest.rotationAxis = "Y"
+        }
+        if let dest = destination as? SceneViewController{
+            dest.customURL = ARModelLink
         }
     }
     

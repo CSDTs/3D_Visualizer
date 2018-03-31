@@ -14,11 +14,11 @@ private let reuseIdentifier = "2DCell"
 class TwoDModelCollectionViewCell: UICollectionViewCell{
     @IBOutlet weak var artwork: UIImageView!
     @IBOutlet weak var artworkTitle: UILabel!
-    var data: (String, String, String, String) = ("Unknown","Unknown","Unknown", "Unknown") {
+    var data: (String, String, String, String, String) = ("Unknown","Unknown","Unknown", "Unknown", "Unknown") {
         didSet{
             artworkTitle.text = data.0
             DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-                let url = URL(string: (self?.data.2)!)
+                let url = URL(string: (self?.data.2 ?? "https://csdt.rpi.edu"))
                 if let imageData = try? Data(contentsOf: url!), let image = UIImage(data: imageData){
                     DispatchQueue.main.async {
                         self?.artwork.contentMode = .scaleAspectFill
@@ -40,7 +40,7 @@ class TwoDModelCollectionViewCell: UICollectionViewCell{
 class TwoDModelCollectionViewController: UICollectionViewController {
     @IBOutlet weak var cellLoadingIndicator: UIActivityIndicatorView!
     //data structure representing the name, description, image link and web url
-    var allData: [(String, String, String, String)] = []
+    var allData: [(String, String, String, String, String)] = []
     var isColectionViewLoaded: Bool = false
     
     override func viewDidLoad() {
@@ -61,8 +61,8 @@ class TwoDModelCollectionViewController: UICollectionViewController {
             let jsonData = try? JSONSerialization.jsonObject(with: data, options: [])
             
             for fetchedData in jsonData as! [Dictionary<String, Any>]{
-                var dataEntry: (String, String, String, String)
-                    = ("Unknown","Unknown","Unknown", "https://csdt.rpi.edu")
+                var dataEntry: (String, String, String, String,String)
+                    = ("Unknown","Unknown","Unknown", "https://csdt.rpi.edu","Unknown")
                 if let id = fetchedData["application"] as? Int {
                     guard id == 38 else { continue }
                 }
@@ -74,6 +74,9 @@ class TwoDModelCollectionViewController: UICollectionViewController {
                 }
                 if let imageURL = fetchedData["screenshot_url"] as? String{
                     dataEntry.2 = "https://csdt.rpi.edu" + imageURL
+                }
+                if let projectURL = fetchedData["project_url"] as? String{
+                    dataEntry.4 = "https://csdt.rpi.edu" + projectURL
                 }
 //                if let webLink = fetchedData["url"] as? String{
 //                    if webLink.contains("http"){

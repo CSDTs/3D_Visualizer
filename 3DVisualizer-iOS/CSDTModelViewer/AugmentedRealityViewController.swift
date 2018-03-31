@@ -246,6 +246,8 @@ class AugmentedRealityViewController: UIViewController, ARSCNViewDelegate {
                 statusLabel.text = "Slow Down"
             case .insufficientFeatures:
                 statusLabel.text = "Insufficient Features"
+            case .relocalizing:
+                statusLabel.text = "Resuming"
             }
         }
     }

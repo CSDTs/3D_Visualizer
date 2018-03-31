@@ -1,29 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="rBS-fg-TB5">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="rBS-fg-TB5">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="ArialBold.ttf">
-            <string>Arial-BoldMT</string>
-        </array>
-        <array key="Avenir.ttc">
-            <string>Avenir-Book</string>
-            <string>Avenir-Heavy</string>
-        </array>
-        <array key="AvenirNext.ttc">
-            <string>AvenirNext-Bold</string>
-            <string>AvenirNext-Regular</string>
-        </array>
-    </customFonts>
     <scenes>
         <!--Model Picker View Controller-->
         <scene sceneID="g0N-rm-xvw">
@@ -141,7 +128,7 @@
                                                         <action selector="changeModelColor:" destination="BYZ-38-t0r" eventType="valueChanged" id="yKw-co-Jn6"/>
                                                     </connections>
                                                 </segmentedControl>
-                                                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1000" minValue="0.0" maxValue="5000" translatesAutoresizingMaskIntoConstraints="NO" id="vZK-FQ-TdJ">
+                                                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="100000" minValue="0.0" maxValue="200000" translatesAutoresizingMaskIntoConstraints="NO" id="vZK-FQ-TdJ">
                                                     <rect key="frame" x="-2" y="43" width="204" height="26.5"/>
                                                     <color key="minimumTrackTintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <color key="thumbTintColor" red="0.1333333333" green="0.41176470590000003" blue="0.027450980390000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -316,8 +303,8 @@
                             <rect key="frame" x="103.5" y="7" width="168" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <segments>
-                                <segment title="3D"/>
-                                <segment title="2D"/>
+                                <segment title="Device"/>
+                                <segment title="Server"/>
                             </segments>
                             <color key="tintColor" red="0.1333333333" green="0.41176470590000003" blue="0.027450980390000001" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
@@ -434,11 +421,11 @@
                                     <constraint firstAttribute="width" secondItem="bQI-2s-Uw3" secondAttribute="height" multiplier="229:46" id="St7-s0-hLd"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="24"/>
-                                <state key="normal" title="View In AR">
+                                <state key="normal" title="View in 2D">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <segue destination="tNc-x8-Nzf" kind="presentation" modalTransitionStyle="flipHorizontal" id="aRu-ht-MY6"/>
+                                    <action selector="modelARSegue:" destination="CBT-2m-uPW" eventType="touchUpInside" id="2LT-uS-d4m"/>
                                 </connections>
                             </button>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="ajm-x4-R5t">
@@ -481,11 +468,13 @@
                         <outlet property="specificsImage" destination="dpJ-p2-nxN" id="GUe-m3-BxK"/>
                         <outlet property="specificsTextView" destination="3RT-8P-ITH" id="Zkv-V1-ZT2"/>
                         <outlet property="viewARButton" destination="bQI-2s-Uw3" id="XxY-kF-boz"/>
+                        <segue destination="BYZ-38-t0r" kind="presentation" identifier="stlSegue" modalTransitionStyle="flipHorizontal" id="lvY-b4-7g6"/>
+                        <segue destination="tNc-x8-Nzf" kind="presentation" identifier="flatImageSegue" modalTransitionStyle="flipHorizontal" id="icL-30-aeZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ros-iP-KTl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="924" y="-934.18290854572717"/>
+            <point key="canvasLocation" x="942" y="-931"/>
         </scene>
         <!--ThreeD Model List Table View Controller-->
         <scene sceneID="hPv-bg-QyZ">
@@ -920,7 +909,7 @@
         <image name="yesIcon" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="tMZ-Hj-rYz"/>
-        <segue reference="inj-tq-Xef"/>
+        <segue reference="icL-30-aeZ"/>
+        <segue reference="lvY-b4-7g6"/>
     </inferredMetricsTieBreakers>
 </document>

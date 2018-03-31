@@ -15,7 +15,7 @@ class ThreeDModelListTableViewController: UITableViewController {
     lazy var models: [URL] = {
         let modelsURL = Bundle.main.url(forResource: "Models", withExtension: nil)!
         let fileEnumerator = FileManager().enumerator(at: modelsURL, includingPropertiesForKeys: [])!
-        return fileEnumerator.flatMap{ element in
+        return fileEnumerator.compactMap{ element in
             let url = element as! URL
             //guard url.pathExtension == "stl" else { return nil }
             modelNames[0].append(url.lastPathComponent)

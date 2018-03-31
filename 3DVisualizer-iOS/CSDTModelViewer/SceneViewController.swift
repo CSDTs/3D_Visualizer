@@ -30,6 +30,7 @@ class SceneViewController: UIViewController, UIPopoverPresentationControllerDele
     var selectedColor: UIColor = UIColor.clear
     var IntensityOrTemperature = true
     var isFromWeb = false
+    var blobLink: URL? = nil
     
     override var preferredStatusBarStyle: UIStatusBarStyle{
         return .default
@@ -55,7 +56,22 @@ class SceneViewController: UIViewController, UIPopoverPresentationControllerDele
         navigationController?.setNavigationBarHidden(true, animated: true)
         colorSegments.selectedSegmentIndex = -1
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-            if self?.customURL != "None"{
+            if (self?.customURL.contains("blob"))!{ // blob files require special handling
+                do {
+                    let fileURL = URL(string: (self?.customURL)!)!
+                    let fileManager = FileManager.default
+                    let modelData =  try Data(contentsOf: fileURL)
+                    let directory = try fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+                    let fileName = fileURL.lastPathComponent
+                    try modelData.write(to: directory.appendingPathComponent(fileName).appendingPathExtension("stl"))
+                    let convertedFileURL = try! fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent(fileName).appendingPathExtension("stl")
+                    DispatchQueue.main.async { self?.modelAsset = MDLAsset(url: convertedFileURL)}
+                    self?.ARModelScale = 0.002
+                    self?.blobLink = convertedFileURL
+                } catch {
+                    return
+                }
+            } else if self?.customURL != "None"{
                 if !(self?.isFromWeb)! { self?.customURL = "file://" + (self?.customURL ?? "") }
                 guard let url = URL(string: (self?.customURL)!) else {
                     fatalError("failed to open model file")
@@ -133,7 +149,7 @@ class SceneViewController: UIViewController, UIPopoverPresentationControllerDele
         lightingControl.light = SCNLight()
         lightingControl.light?.type = .omni
         lightingControl.light?.color = UIColor.white
-        lightingControl.light?.intensity = 2000
+        lightingControl.light?.intensity = 100000
         lightingControl.position = SCNVector3Make(0, 50, 50)
         scene.rootNode.addChildNode(lightingControl)
         
@@ -184,6 +200,7 @@ class SceneViewController: UIViewController, UIPopoverPresentationControllerDele
     
     @IBAction func exitSceneView(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
+        if let blobs = blobLink { try? FileManager.default.removeItem(at: blobs) }
     }
     
     @IBAction func updateSceneSettings(from segue:UIStoryboardSegue){
@@ -195,9 +212,11 @@ class SceneViewController: UIViewController, UIPopoverPresentationControllerDele
             ARRotationAxis = settings.ARRotationAxis
             IntensityOrTemperature = settings.IntensityOrTemp
             if IntensityOrTemperature{
+                intensitySlider.maximumValue = 200000
                 lightingControl.light?.intensity = CGFloat(intensitySlider.value)
             } else {
-                lightingControl.light?.temperature = CGFloat(intensitySlider.value)
+                intensitySlider.maximumValue = 2000
+                lightingControl.light?.temperature = CGFloat(intensitySlider.value/100)
             }
         }
     }
