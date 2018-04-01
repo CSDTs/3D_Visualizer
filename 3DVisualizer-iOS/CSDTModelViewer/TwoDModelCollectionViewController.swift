@@ -17,10 +17,12 @@ class TwoDModelCollectionViewCell: UICollectionViewCell{
     var data: (String, String, String, String, String) = ("Unknown","Unknown","Unknown", "Unknown", "Unknown") {
         didSet{
             artworkTitle.text = data.0
+            UIApplication.shared.isNetworkActivityIndicatorVisible = true
             DispatchQueue.global(qos: .userInitiated).async { [weak self] in
                 let url = URL(string: (self?.data.2 ?? "https://csdt.rpi.edu"))
                 if let imageData = try? Data(contentsOf: url!), let image = UIImage(data: imageData){
                     DispatchQueue.main.async {
+                        UIApplication.shared.isNetworkActivityIndicatorVisible = false
                         self?.artwork.contentMode = .scaleAspectFill
                         self?.artwork.image = image
                         self?.artwork.layer.borderWidth = 0.375
@@ -45,9 +47,22 @@ class TwoDModelCollectionViewController: UICollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        performFetch(withRefresher: nil)
+        if #available(iOS 10.0, *){
+            let refreshControl = UIRefreshControl()
+            refreshControl.attributedTitle = NSAttributedString(string: "PULL TO REFRESH", attributes: [NSAttributedStringKey.font: UIFont(name: "Avenir", size: 13.0) ?? UIFont.boldSystemFont(ofSize: 13.0)])
+            refreshControl.addTarget(self, action: #selector(refreshModels(sender:)), for: .valueChanged)
+            self.collectionView?.refreshControl = refreshControl
+        }
+    }
+    
+    @objc private func refreshModels(sender: UIRefreshControl){
+        performFetch(withRefresher: sender)
+    }
+    
+    private func performFetch(withRefresher refresher: UIRefreshControl?){
         cellLoadingIndicator.startAnimating()
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        
         Alamofire.request("https://csdt.rpi.edu/api/projects/").responseJSON { response in
             guard response.result.isSuccess else {
                 let alert = UIAlertController(title: "Network Fetch Failed", message: "Data could not be fetched. Check your internet connection", preferredStyle: .alert)
@@ -55,6 +70,7 @@ class TwoDModelCollectionViewController: UICollectionViewController {
                 alert.view.tintColor = customGreen()
                 self.present(alert, animated: true, completion: nil)
                 self.cellLoadingIndicator.stopAnimating()
+                refresher?.endRefreshing()
                 return
             }
             guard let data = response.data else { return }
@@ -78,19 +94,13 @@ class TwoDModelCollectionViewController: UICollectionViewController {
                 if let projectURL = fetchedData["project_url"] as? String{
                     dataEntry.4 = "https://csdt.rpi.edu" + projectURL
                 }
-//                if let webLink = fetchedData["url"] as? String{
-//                    if webLink.contains("http"){
-//                        dataEntry.3 = webLink
-//                    } else {
-//                        dataEntry.3 += webLink
-//                    }
-//                }
                 dataEntry.3 = "https://csdt.rpi.edu/"
                 self.allData.append(dataEntry)
             }
             self.collectionView?.reloadData()
             self.cellLoadingIndicator.stopAnimating()
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
+            refresher?.endRefreshing()
         }
     }
     

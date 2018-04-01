@@ -9,7 +9,8 @@ This is an iOS application for visualizing 3D CAD models, created using SceneKit
 
 ### Fetch Models
 *  Fetch the models using a valid web link or use the default wigwam model. If the link is invalid, the application will fall back to using the default wigwam model.
-* Pick a model from the 3D/2D list. For 2D, the app presents a grid-like layout displaying all the images of projects fetched from the projects API from CSDT. The user can view the image in detail and display the image using AR.
+* Pick a model from the Device/Server list. For Server, the app presents a grid-like layout displaying all the images of projects fetched from the projects API from CSDT. The user can view the image in detail and display the image using AR if no 3D model data are found. If there is a 3D model associated with the project, the user can visualize it in 3D and AR.
+* Import models from a third-party source (e.g. mail attachment), visualize it and save on device.
 
 ### Manupulate models with SceneKit
 * Zoom, move and rotate model with gestures
