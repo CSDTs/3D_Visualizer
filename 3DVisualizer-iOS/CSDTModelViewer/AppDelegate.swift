@@ -27,6 +27,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "picker")
         return true
     }
+    
+    func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
+        let type = shortcutItem.type.components(separatedBy: ".").last ?? ""
+        switch type {
+        case "OpenList":
+            UserDefaults.standard.set(true, forKey: "OpenList")
+        case "OpenLink":
+            UserDefaults.standard.set(true, forKey: "OpenLink")
+        case "OpenDefault":
+            UserDefaults.standard.set(true, forKey: "OpenDefault")
+        default:
+            break
+        }
+        window?.rootViewController = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "picker")
+    }
 
     func applicationWillResignActive(_ application: UIApplication) {}
 

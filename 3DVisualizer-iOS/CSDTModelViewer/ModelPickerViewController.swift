@@ -32,8 +32,22 @@ class ModelPickerViewController: UIViewController {
         if UserDefaults.standard.bool(forKey: "ThirdPartyLaunch"){
             isThirdPartyOpen = true
             DispatchQueue.main.async { self.performSegue(withIdentifier: "donePickingModel", sender: self)}
+            return
         }
+        if UserDefaults.standard.bool(forKey: "OpenLink"){
+            customURLButton.sendActions(for: .touchUpInside)
+        }
+        if UserDefaults.standard.bool(forKey: "OpenDefault"){
+            defaultURLButton.sendActions(for: .touchUpInside)
+        }
+        if UserDefaults.standard.bool(forKey: "OpenList"){
+            listButton.sendActions(for: .touchUpInside)
+        }
+        UserDefaults.standard.set(false, forKey: "OpenLink")
+        UserDefaults.standard.set(false, forKey: "OpenDefault")
+        UserDefaults.standard.set(false, forKey: "OpenList")
     }
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

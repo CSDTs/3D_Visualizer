@@ -43,7 +43,7 @@ class SceneSettingsTableViewController: UITableViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -88,12 +88,14 @@ class SceneSettingsTableViewController: UITableViewController {
             if lightSettings == allSettings[indexPath.section][indexPath.row]{
                 prevLightIndex = indexPath
                 cell.accessoryType = .checkmark
+                cell.tintColor = customGreen()
             }
             cell.textLabel?.text = allSettings[indexPath.section][indexPath.row]
         case 3:
             if blendSettings == allSettings[indexPath.section][indexPath.row]{
                 prevBlendIndex = indexPath
                 cell.accessoryType = .checkmark
+                cell.tintColor = customGreen()
             }
             cell.textLabel?.text = allSettings[indexPath.section][indexPath.row]
         case 4:
@@ -101,6 +103,7 @@ class SceneSettingsTableViewController: UITableViewController {
             if ((animationMode == animationSettings.none && curr == "None") || (animationMode == .rotate && curr == "Rotate")) {
                 prevAnimationIndex = indexPath
                 cell.accessoryType = .checkmark
+                cell.tintColor = customGreen()
             }
             cell.textLabel?.text = allSettings[indexPath.section][indexPath.row]
         default:break
@@ -150,6 +153,7 @@ class SceneSettingsTableViewController: UITableViewController {
             tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
         default:break
         }
+        if indexPath.section != 0 {tableView.cellForRow(at: indexPath)?.tintColor = customGreen() }
         impactGenerator.impactOccurred()
     }
     

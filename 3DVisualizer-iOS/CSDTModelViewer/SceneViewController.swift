@@ -92,6 +92,7 @@ class SceneViewController: UIViewController, UIPopoverPresentationControllerDele
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         // ask the user to save / not save the 3d model on device
+        navigationController?.setNavigationBarHidden(true, animated: true)
         if UserDefaults.standard.bool(forKey: "ThirdPartyLaunch"){
             let saveAlert = UIAlertController(title: "Save Model on Device?", message: "If so, enter the name of model in the text field, with no whitespaces. Make sure that the file name ends with extension .stl .", preferredStyle: .alert)
             saveAlert.addTextField { textfield in
@@ -170,6 +171,14 @@ class SceneViewController: UIViewController, UIPopoverPresentationControllerDele
         wigwaam = scene.rootNode.childNodes.first!
         modelLoadingIndicator?.stopAnimating()
         modelLoadingIndicator?.isOpaque = true
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if UserDefaults.standard.bool(forKey: "AR3DTouch"){
+            ARButton.sendActions(for: .touchUpInside)
+        }
+        UserDefaults.standard.set(false, forKey: "AR3DTouch")
     }
     
     @IBAction func changeModelColor(_ sender: UISegmentedControl) {
@@ -265,6 +274,16 @@ class SceneViewController: UIViewController, UIPopoverPresentationControllerDele
     
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         return .none
+    }
+    
+    override var previewActionItems: [UIPreviewActionItem]{
+        return [UIPreviewAction(title: "View in AR", style: .default) { action, controller in
+            DispatchQueue.main.async {
+                NotificationCenter.default.post(name: Notification.Name.viewARPeekDidDismiss, object: nil, userInfo: nil)
+                UserDefaults.standard.set(self.customURL, forKey: "ARPeek")
+                controller.dismiss(animated: true)
+            }
+        }]
     }
 }
 

@@ -66,5 +66,53 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+    <key>UIApplicationShortcutItems</key>
+    <array>
+        <dict>
+            <key>UIApplicationShortcutItemIconFile</key>
+            <string>SafariIcon</string>
+            <key>UIApplicationShortcutItemSubtitle</key>
+            <string></string>
+            <key>UIApplicationShortcutItemTitle</key>
+            <string>Link</string>
+            <key>UIApplicationShortcutItemType</key>
+            <string>$(PRODUCT_BUNDLE_IDENTIFIER).OpenLink</string>
+            <key>UIApplicationShortcutItemUserInfo</key>
+            <dict>
+                <key>version</key>
+                <string>${APP_VERSION}</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>UIApplicationShortcutItemIconFile</key>
+            <string>cube</string>
+            <key>UIApplicationShortcutItemSubtitle</key>
+            <string></string>
+            <key>UIApplicationShortcutItemTitle</key>
+            <string>Default</string>
+            <key>UIApplicationShortcutItemType</key>
+            <string>$(PRODUCT_BUNDLE_IDENTIFIER).OpenDefault</string>
+            <key>UIApplicationShortcutItemUserInfo</key>
+            <dict>
+                <key>version</key>
+                <string>${APP_VERSION}</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>UIApplicationShortcutItemIconFile</key>
+            <string>listIcon</string>
+            <key>UIApplicationShortcutItemSubtitle</key>
+            <string></string>
+            <key>UIApplicationShortcutItemTitle</key>
+            <string>List</string>
+            <key>UIApplicationShortcutItemType</key>
+            <string>$(PRODUCT_BUNDLE_IDENTIFIER).OpenList</string>
+            <key>UIApplicationShortcutItemUserInfo</key>
+            <dict>
+                <key>version</key>
+                <string>${APP_VERSION}</string>
+            </dict>
+        </dict>
+    </array>
 </dict>
 </plist>

@@ -148,5 +148,6 @@ extension UIColor{
 
 extension Notification.Name{
     static let onLightSwitchChange = Notification.Name("on-light-switch-change")
+    static let viewARPeekDidDismiss = Notification.Name("viewARPeekDidDismiss");
 }
 

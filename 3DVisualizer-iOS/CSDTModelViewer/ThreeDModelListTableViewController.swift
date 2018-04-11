@@ -8,9 +8,11 @@
 
 import UIKit
 
-class ThreeDModelListTableViewController: UITableViewController {
+class ThreeDModelListTableViewController: UITableViewController, UIViewControllerPreviewingDelegate {
+    
     var modelNames: [[String]] = [[],[]]
     let sectionTitles = ["Default Models", "Saved Models"]
+    var selectedARIndexPath: IndexPath?
 
     lazy var models: [URL] = {
         let modelsURL = Bundle.main.url(forResource: "Models", withExtension: nil)!
@@ -46,6 +48,26 @@ class ThreeDModelListTableViewController: UITableViewController {
         let _ = models.count
         let _ = savedModels.count
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if traitCollection.forceTouchCapability == .available{
+            registerForPreviewing(with: self, sourceView: tableView)
+        }
+        NotificationCenter.default.addObserver(self, selector: #selector(handleARPeekDismiss(with:)), name: Notification.Name.viewARPeekDidDismiss, object: nil)
+    }
+    
+    @objc func handleARPeekDismiss(with notification:NSNotification){
+        print("notification received")
+        if let _ = UserDefaults.standard.url(forKey: "ARPeek"){
+            self.tableView.selectRow(at: self.selectedARIndexPath, animated: false, scrollPosition: .middle)
+            UserDefaults.standard.set(true, forKey: "AR3DTouch")
+            DispatchQueue.main.async {
+                self.performSegue(withIdentifier: "3DModelListSegue", sender: self)
+            }
+            UserDefaults.standard.set(nil, forKey: "ARPeek")
+        }
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -80,6 +102,7 @@ class ThreeDModelListTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         DispatchQueue.main.async {
+            self.selectedARIndexPath = indexPath
             self.performSegue(withIdentifier: "3DModelListSegue", sender: self)
         }
     }
@@ -115,6 +138,25 @@ class ThreeDModelListTableViewController: UITableViewController {
             default: break
             }
         }
+    }
+    
+    // MARK: UIViewControllerPreviewingDelegate
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+        guard let indexPath = tableView.indexPathForRow(at: location), let cell = tableView.cellForRow(at: indexPath), let threeDVC = storyboard?.instantiateViewController(withIdentifier: "sceneViewController") as? SceneViewController else { return nil }
+        if indexPath.section == 0 {
+            threeDVC.customURL = models[indexPath.row].path
+        } else if indexPath.section == 1{
+            threeDVC.customURL = savedModels[indexPath.row].path
+        }
+        threeDVC.preferredContentSize = CGSize(width: 0, height: 300.0)
+        previewingContext.sourceRect = cell.frame
+        selectedARIndexPath = indexPath
+        return threeDVC
+    }
+    
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
+        viewControllerToCommit.navigationController?.setNavigationBarHidden(true, animated: false)
+        show(viewControllerToCommit, sender: self)
     }
  
 }

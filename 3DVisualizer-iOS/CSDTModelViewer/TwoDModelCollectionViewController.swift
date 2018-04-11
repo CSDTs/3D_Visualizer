@@ -39,11 +39,11 @@ class TwoDModelCollectionViewCell: UICollectionViewCell{
     }
 }
 
-class TwoDModelCollectionViewController: UICollectionViewController {
+class TwoDModelCollectionViewController: UICollectionViewController, UIViewControllerPreviewingDelegate {
     @IBOutlet weak var cellLoadingIndicator: UIActivityIndicatorView!
     //data structure representing the name, description, image link and web url
     var allData: [(String, String, String, String, String)] = []
-    var isColectionViewLoaded: Bool = false
+    var isCollectionViewSetUp = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,11 +56,13 @@ class TwoDModelCollectionViewController: UICollectionViewController {
         }
     }
     
+    
     @objc private func refreshModels(sender: UIRefreshControl){
         performFetch(withRefresher: sender)
     }
     
     private func performFetch(withRefresher refresher: UIRefreshControl?){
+        var temp: [(String, String, String, String, String)] = []
         cellLoadingIndicator.startAnimating()
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         Alamofire.request("https://csdt.rpi.edu/api/projects/").responseJSON { response in
@@ -95,8 +97,9 @@ class TwoDModelCollectionViewController: UICollectionViewController {
                     dataEntry.4 = "https://csdt.rpi.edu" + projectURL
                 }
                 dataEntry.3 = "https://csdt.rpi.edu/"
-                self.allData.append(dataEntry)
+                temp.append(dataEntry)
             }
+            self.allData = temp
             self.collectionView?.reloadData()
             self.cellLoadingIndicator.stopAnimating()
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
@@ -106,9 +109,13 @@ class TwoDModelCollectionViewController: UICollectionViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        guard !isColectionViewLoaded else { return }
-        setupCollectionViewLayout(with: collectionView, andSize: traitCollection.horizontalSizeClass)
-        isColectionViewLoaded = true
+        if !isCollectionViewSetUp { // DO NOT DELETE: CRUCIAL FOR PREVENTING "OBJECT CAN'T BE NIL" ERROR
+            setupCollectionViewLayout(with: collectionView, andSize: traitCollection.horizontalSizeClass)
+            isCollectionViewSetUp = true
+        }
+        if traitCollection.forceTouchCapability == .available{
+            registerForPreviewing(with: self, sourceView: collectionView ?? view)
+        }
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -165,5 +172,22 @@ class TwoDModelCollectionViewController: UICollectionViewController {
         }
     
         return cell
+    }
+    
+    // MARK: UIViewControllerPreviewingDelegate (For force touch)
+    // peek
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+        guard let indexPath = collectionView?.indexPathForItem(at: location) else { return nil }
+        guard let cell = collectionView?.cellForItem(at: indexPath) else { return nil }
+        guard let peekedVC = storyboard?.instantiateViewController(withIdentifier: "modelDetailNav") as? UINavigationController else {return nil}
+        (peekedVC.visibleViewController as? TwoDSpecificsViewController)?.specificData = allData[indexPath.row]
+        peekedVC.preferredContentSize = CGSize(width: 0, height: 300.0)
+        previewingContext.sourceRect = cell.convert(cell.bounds, to: collectionView)
+        return peekedVC
+        
+    }
+    // pop
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
+        show(viewControllerToCommit, sender: self)
     }
 }
