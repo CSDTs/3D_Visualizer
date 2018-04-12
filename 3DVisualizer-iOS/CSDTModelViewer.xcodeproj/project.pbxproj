@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		0420FFAD2025021600FCA0EB /* SceneSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0420FFAC2025021600FCA0EB /* SceneSettingsTableViewController.swift */; };
 		0420FFAF2025075A00FCA0EB /* Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0420FFAE2025075A00FCA0EB /* Shared.swift */; };
+		042BCB3E207F19110052AC18 /* ThreeDDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042BCB3D207F19110052AC18 /* ThreeDDataModel.swift */; };
+		042BCB40207F207C0052AC18 /* JSONFetch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042BCB3F207F207C0052AC18 /* JSONFetch.swift */; };
+		042BCB42207F29500052AC18 /* ARModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042BCB41207F29500052AC18 /* ARModel.swift */; };
 		0447270C2023C64C003A9095 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0447270B2023C64C003A9095 /* AppDelegate.swift */; };
 		0447270E2023C64C003A9095 /* SceneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0447270D2023C64C003A9095 /* SceneViewController.swift */; };
 		044727112023C64C003A9095 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0447270F2023C64C003A9095 /* Main.storyboard */; };
@@ -30,6 +33,9 @@
 /* Begin PBXFileReference section */
 		0420FFAC2025021600FCA0EB /* SceneSettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneSettingsTableViewController.swift; sourceTree = "<group>"; };
 		0420FFAE2025075A00FCA0EB /* Shared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shared.swift; sourceTree = "<group>"; };
+		042BCB3D207F19110052AC18 /* ThreeDDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreeDDataModel.swift; sourceTree = "<group>"; };
+		042BCB3F207F207C0052AC18 /* JSONFetch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONFetch.swift; sourceTree = "<group>"; };
+		042BCB41207F29500052AC18 /* ARModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARModel.swift; sourceTree = "<group>"; };
 		044727082023C64C003A9095 /* CSDTModelViewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CSDTModelViewer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0447270B2023C64C003A9095 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0447270D2023C64C003A9095 /* SceneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneViewController.swift; sourceTree = "<group>"; };
@@ -72,6 +78,18 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		042BCB3C207F18C90052AC18 /* ModelClasses */ = {
+			isa = PBXGroup;
+			children = (
+				042BCB3D207F19110052AC18 /* ThreeDDataModel.swift */,
+				0420FFAE2025075A00FCA0EB /* Shared.swift */,
+				042BCB3F207F207C0052AC18 /* JSONFetch.swift */,
+				04DFE45820412B5F00AB8FBF /* SettingsHeader.swift */,
+				042BCB41207F29500052AC18 /* ARModel.swift */,
+			);
+			path = ModelClasses;
+			sourceTree = "<group>";
+		};
 		044726FF2023C64C003A9095 = {
 			isa = PBXGroup;
 			children = (
@@ -93,14 +111,13 @@
 		0447270A2023C64C003A9095 /* CSDTModelViewer */ = {
 			isa = PBXGroup;
 			children = (
+				042BCB3C207F18C90052AC18 /* ModelClasses */,
 				044E8F452066C04D00A2FD1A /* Models */,
 				0447270B2023C64C003A9095 /* AppDelegate.swift */,
 				0447270D2023C64C003A9095 /* SceneViewController.swift */,
 				0420FFAC2025021600FCA0EB /* SceneSettingsTableViewController.swift */,
 				04DFE45620412AAD00AB8FBF /* SettingsHeaderView.xib */,
-				04DFE45820412B5F00AB8FBF /* SettingsHeader.swift */,
 				04AFD7EE202434B600FA5DFF /* ModelPickerViewController.swift */,
-				0420FFAE2025075A00FCA0EB /* Shared.swift */,
 				045B39082026327800E3BA39 /* AugmentedRealityViewController.swift */,
 				0447270F2023C64C003A9095 /* Main.storyboard */,
 				0486266020380590003E1400 /* TwoDSpecificsViewController.swift */,
@@ -262,9 +279,12 @@
 				0420FFAF2025075A00FCA0EB /* Shared.swift in Sources */,
 				0447270E2023C64C003A9095 /* SceneViewController.swift in Sources */,
 				0486266120380590003E1400 /* TwoDSpecificsViewController.swift in Sources */,
+				042BCB40207F207C0052AC18 /* JSONFetch.swift in Sources */,
 				047A8DF82037D0C10066521A /* TwoDModelCollectionViewController.swift in Sources */,
 				04DFE45920412B5F00AB8FBF /* SettingsHeader.swift in Sources */,
+				042BCB3E207F19110052AC18 /* ThreeDDataModel.swift in Sources */,
 				04854EE820312A6E00D4958C /* SettingsPickerTableViewCell.swift in Sources */,
+				042BCB42207F29500052AC18 /* ARModel.swift in Sources */,
 				0447270C2023C64C003A9095 /* AppDelegate.swift in Sources */,
 				04AFD7EF202434B600FA5DFF /* ModelPickerViewController.swift in Sources */,
 				047A8DF62037CAED0066521A /* ThreeDModelListTableViewController.swift in Sources */,

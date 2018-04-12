@@ -13,40 +13,21 @@ class ThreeDModelListTableViewController: UITableViewController, UIViewControlle
     var modelNames: [[String]] = [[],[]]
     let sectionTitles = ["Default Models", "Saved Models"]
     var selectedARIndexPath: IndexPath?
-
-    lazy var models: [URL] = {
-        let modelsURL = Bundle.main.url(forResource: "Models", withExtension: nil)!
-        let fileEnumerator = FileManager().enumerator(at: modelsURL, includingPropertiesForKeys: [])!
-        return fileEnumerator.compactMap{ element in
-            let url = element as! URL
-            //guard url.pathExtension == "stl" else { return nil }
-            modelNames[0].append(url.lastPathComponent)
-            return url
-        }
-    }()
-    
-    lazy var savedModels: [URL] = {
-        let fileManager = FileManager.default
-        var results: [URL] = []
-        do {
-            let directory = try fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-            let fileEnumerator = FileManager().enumerator(at: directory, includingPropertiesForKeys: [])!
-            while let element = fileEnumerator.nextObject() as? URL{
-                if (element.lastPathComponent == "Inbox") { continue }
-                results.append(element)
-                modelNames[1].append(element.lastPathComponent)
-            }
-        } catch {
-            return []
-        }
-        return results
-    }()
+    var models: [URL] = []
+    var savedModels: [URL] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // initialize lazy vars
-        let _ = models.count
-        let _ = savedModels.count
+        self.title = "Device"
+        var modelNames1:[String] = []
+        var modelNames2:[String] = []
+        (models,modelNames1) = ThreeDDataModel.obtainDefaultModelURL()
+        (savedModels,modelNames2) = ThreeDDataModel.obtainSavedModelURL()
+        modelNames = [modelNames1,modelNames2]
+    }
+    
+    @IBAction func diismiss(_ sender: UIBarButtonItem) {
+       dismiss(animated: true, completion: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {

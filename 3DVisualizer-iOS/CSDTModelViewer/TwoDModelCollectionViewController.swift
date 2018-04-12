@@ -47,6 +47,7 @@ class TwoDModelCollectionViewController: UICollectionViewController, UIViewContr
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "Server"
         performFetch(withRefresher: nil)
         if #available(iOS 10.0, *){
             let refreshControl = UIRefreshControl()
@@ -61,8 +62,11 @@ class TwoDModelCollectionViewController: UICollectionViewController, UIViewContr
         performFetch(withRefresher: sender)
     }
     
+    @IBAction func dismiss(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
+    
     private func performFetch(withRefresher refresher: UIRefreshControl?){
-        var temp: [(String, String, String, String, String)] = []
         cellLoadingIndicator.startAnimating()
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         Alamofire.request("https://csdt.rpi.edu/api/projects/").responseJSON { response in
@@ -77,29 +81,7 @@ class TwoDModelCollectionViewController: UICollectionViewController, UIViewContr
             }
             guard let data = response.data else { return }
             let jsonData = try? JSONSerialization.jsonObject(with: data, options: [])
-            
-            for fetchedData in jsonData as! [Dictionary<String, Any>]{
-                var dataEntry: (String, String, String, String,String)
-                    = ("Unknown","Unknown","Unknown", "https://csdt.rpi.edu","Unknown")
-                if let id = fetchedData["application"] as? Int {
-                    guard id == 38 else { continue }
-                }
-                if let name = fetchedData["name"] as? String{
-                    dataEntry.0 = name.capitalized
-                }
-                if let descrip = fetchedData["description"] as? String{
-                    dataEntry.1 = descrip
-                }
-                if let imageURL = fetchedData["screenshot_url"] as? String{
-                    dataEntry.2 = "https://csdt.rpi.edu" + imageURL
-                }
-                if let projectURL = fetchedData["project_url"] as? String{
-                    dataEntry.4 = "https://csdt.rpi.edu" + projectURL
-                }
-                dataEntry.3 = "https://csdt.rpi.edu/"
-                temp.append(dataEntry)
-            }
-            self.allData = temp
+            self.allData = JSONFetch.fetchFromCSDTServer(with: jsonData)
             self.collectionView?.reloadData()
             self.cellLoadingIndicator.stopAnimating()
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
