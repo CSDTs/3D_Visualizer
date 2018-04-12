@@ -2,7 +2,7 @@
 //  ThreeDDataModel.swift
 //  CSDTModelViewer
 //
-//  Created by Jing Wei Li on 4/12/18.
+//  Created by Jing Wei Li on 4/10/18.
 //  Copyright © 2018 Jing Wei Li. All rights reserved.
 //
 

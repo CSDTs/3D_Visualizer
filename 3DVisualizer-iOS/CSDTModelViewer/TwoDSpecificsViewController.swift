@@ -95,14 +95,16 @@ class TwoDSpecificsViewController: UIViewController, XMLParserDelegate {
             destination = nav.visibleViewController ?? destination
         }
         if let dest = destination as? AugmentedRealityViewController{
-            dest.isThreeD = false
-            dest.twoDImage = specificsImage.image
-            dest.lightSettings = determineLightType(with: SCNLight())
-            dest.blendSettings = determineBlendMode(with: SCNBlendMode.alpha)
-            dest.animationSettings = animationSettings.none
-            dest.lightColor = UIColor.white
-            dest.modelScale = 0.002
-            dest.rotationAxis = "Y"
+            let ar = ARModel()
+            ar.isThreeD = false
+            ar.twoDImage = specificsImage.image
+            ar.lightSettings = determineLightType(with: SCNLight())
+            ar.blendSettings = determineBlendMode(with: SCNBlendMode.alpha)
+            ar.animationSettings = animationSettings.none
+            ar.lightColor = UIColor.white
+            ar.modelScale = 0.002
+            ar.rotationAxis = "Y"
+            dest.ar = ar
         }
         if let dest = destination as? SceneViewController{
             dest.customURL = ARModelLink

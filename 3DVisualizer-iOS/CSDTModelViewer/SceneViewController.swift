@@ -249,13 +249,15 @@ class SceneViewController: UIViewController, UIPopoverPresentationControllerDele
             dest.IntensityOrTemp = IntensityOrTemperature
         }
         if let dest = destinationViewController as? AugmentedRealityViewController{
-            dest.model = modelObject
-            dest.lightSettings = determineLightType(with: lightingControl.light!)
-            dest.blendSettings = determineBlendMode(with: modelNode.geometry!.firstMaterial!.blendMode)
-            dest.animationSettings = animationMode
-            dest.lightColor = lightingControl.light!.color as! UIColor
-            dest.modelScale = ARModelScale
-            dest.rotationAxis = ARRotationAxis
+            let ar = ARModel()
+            ar.model = modelObject
+            ar.lightSettings = determineLightType(with: lightingControl.light!)
+            ar.blendSettings = determineBlendMode(with: modelNode.geometry!.firstMaterial!.blendMode)
+            ar.animationSettings = animationMode
+            ar.lightColor = lightingControl.light!.color as! UIColor
+            ar.modelScale = ARModelScale
+            ar.rotationAxis = ARRotationAxis
+            dest.ar = ar
         }
         if let dest = destinationViewController as? ColorPickerCollectionView{
             dest.selectedColor = lightingControl.light?.color as! UIColor

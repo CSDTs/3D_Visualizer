@@ -12,6 +12,7 @@
 		042BCB3E207F19110052AC18 /* ThreeDDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042BCB3D207F19110052AC18 /* ThreeDDataModel.swift */; };
 		042BCB40207F207C0052AC18 /* JSONFetch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042BCB3F207F207C0052AC18 /* JSONFetch.swift */; };
 		042BCB42207F29500052AC18 /* ARModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042BCB41207F29500052AC18 /* ARModel.swift */; };
+		042BCB44207FA1BC0052AC18 /* SceneViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042BCB43207FA1BC0052AC18 /* SceneViewModel.swift */; };
 		0447270C2023C64C003A9095 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0447270B2023C64C003A9095 /* AppDelegate.swift */; };
 		0447270E2023C64C003A9095 /* SceneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0447270D2023C64C003A9095 /* SceneViewController.swift */; };
 		044727112023C64C003A9095 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0447270F2023C64C003A9095 /* Main.storyboard */; };
@@ -36,6 +37,7 @@
 		042BCB3D207F19110052AC18 /* ThreeDDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreeDDataModel.swift; sourceTree = "<group>"; };
 		042BCB3F207F207C0052AC18 /* JSONFetch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONFetch.swift; sourceTree = "<group>"; };
 		042BCB41207F29500052AC18 /* ARModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARModel.swift; sourceTree = "<group>"; };
+		042BCB43207FA1BC0052AC18 /* SceneViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneViewModel.swift; sourceTree = "<group>"; };
 		044727082023C64C003A9095 /* CSDTModelViewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CSDTModelViewer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0447270B2023C64C003A9095 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0447270D2023C64C003A9095 /* SceneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneViewController.swift; sourceTree = "<group>"; };
@@ -86,6 +88,7 @@
 				042BCB3F207F207C0052AC18 /* JSONFetch.swift */,
 				04DFE45820412B5F00AB8FBF /* SettingsHeader.swift */,
 				042BCB41207F29500052AC18 /* ARModel.swift */,
+				042BCB43207FA1BC0052AC18 /* SceneViewModel.swift */,
 			);
 			path = ModelClasses;
 			sourceTree = "<group>";
@@ -284,6 +287,7 @@
 				04DFE45920412B5F00AB8FBF /* SettingsHeader.swift in Sources */,
 				042BCB3E207F19110052AC18 /* ThreeDDataModel.swift in Sources */,
 				04854EE820312A6E00D4958C /* SettingsPickerTableViewCell.swift in Sources */,
+				042BCB44207FA1BC0052AC18 /* SceneViewModel.swift in Sources */,
 				042BCB42207F29500052AC18 /* ARModel.swift in Sources */,
 				0447270C2023C64C003A9095 /* AppDelegate.swift in Sources */,
 				04AFD7EF202434B600FA5DFF /* ModelPickerViewController.swift in Sources */,
