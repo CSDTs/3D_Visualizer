@@ -31,6 +31,7 @@ class SceneViewController: UIViewController, UIPopoverPresentationControllerDele
     var IntensityOrTemperature = true
     var isFromWeb = false
     var blobLink: URL? = nil
+    var ARPlaneMode: String = "Horizontal"
     
     override var preferredStatusBarStyle: UIStatusBarStyle{
         return .default
@@ -220,6 +221,7 @@ class SceneViewController: UIViewController, UIPopoverPresentationControllerDele
             ARModelScale = settings.ARModelScale
             ARRotationAxis = settings.ARRotationAxis
             IntensityOrTemperature = settings.IntensityOrTemp
+            ARPlaneMode = settings.planeSettings
             if IntensityOrTemperature{
                 intensitySlider.maximumValue = 200000
                 lightingControl.light?.intensity = CGFloat(intensitySlider.value)
@@ -247,6 +249,7 @@ class SceneViewController: UIViewController, UIPopoverPresentationControllerDele
             dest.ARModelScale = ARModelScale
             dest.ARRotationAxis = ARRotationAxis
             dest.IntensityOrTemp = IntensityOrTemperature
+            dest.planeSettings = ARPlaneMode
         }
         if let dest = destinationViewController as? AugmentedRealityViewController{
             let ar = ARModel()
@@ -257,6 +260,7 @@ class SceneViewController: UIViewController, UIPopoverPresentationControllerDele
             ar.lightColor = lightingControl.light!.color as! UIColor
             ar.modelScale = ARModelScale
             ar.rotationAxis = ARRotationAxis
+            ar.planeDirection = ARPlaneMode
             dest.ar = ar
         }
         if let dest = destinationViewController as? ColorPickerCollectionView{

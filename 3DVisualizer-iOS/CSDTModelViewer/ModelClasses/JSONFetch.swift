@@ -10,6 +10,9 @@ import Foundation
 
 struct JSONFetch{
     
+    /**
+     
+     */
     static func fetchFromCSDTServer(with data: Any?) -> [(String, String, String, String, String)]{
         guard let jsonData = data as? [Dictionary<String, Any>] else { return [] }
         var temp: [(String, String, String, String, String)] = []

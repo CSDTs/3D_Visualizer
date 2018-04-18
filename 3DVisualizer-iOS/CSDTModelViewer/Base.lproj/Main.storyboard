@@ -8,6 +8,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -261,7 +262,6 @@
         <!--Master List View Controller-->
         <scene sceneID="YLP-jj-JCQ">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ham-ZR-fuJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="yAW-qm-eDX" customClass="MasterListViewController" customModule="CSDTModelViewer" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="UU2-dm-PBS">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -312,6 +312,7 @@
                         <outlet property="twoDView" destination="Mdn-o0-h5A" id="wsd-Z6-WVw"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ham-ZR-fuJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-2191" y="-1639"/>
         </scene>
@@ -478,14 +479,22 @@
                                 <action selector="dismissDetails:" destination="CBT-2m-uPW" id="4Qk-p8-K4K"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Link" id="dy6-x8-ccC">
-                            <connections>
-                                <action selector="openModelLink:" destination="CBT-2m-uPW" id="EYS-fY-BxT"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem title="Link" id="dy6-x8-ccC">
+                                <connections>
+                                    <action selector="openModelLink:" destination="CBT-2m-uPW" id="EYS-fY-BxT"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem image="horizontalIcon" id="Clc-ou-3Zh">
+                                <connections>
+                                    <action selector="changePlaneDirection:" destination="CBT-2m-uPW" id="kKd-U9-sdb"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="imageLoadingIndicator" destination="ajm-x4-R5t" id="5Kf-nT-Om6"/>
+                        <outlet property="planeDirButton" destination="Clc-ou-3Zh" id="Aad-Cf-JZz"/>
                         <outlet property="specificsImage" destination="dpJ-p2-nxN" id="GUe-m3-BxK"/>
                         <outlet property="specificsTextView" destination="3RT-8P-ITH" id="Zkv-V1-ZT2"/>
                         <outlet property="viewARButton" destination="bQI-2s-Uw3" id="XxY-kF-boz"/>
@@ -638,7 +647,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <arscnView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" jitteringEnabled="YES" wantsMultisampling="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rjU-FU-b9A">
-                                <rect key="frame" x="0.0" y="0.0" width="375.5" height="667"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <gestureRecognizers/>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="9cj-Nf-QXY" appends="YES" id="R8K-p5-YP0"/>
@@ -648,7 +657,7 @@
                                 </connections>
                             </arscnView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QfC-6P-SGf">
-                                <rect key="frame" x="15" y="32" width="59.5" height="34"/>
+                                <rect key="frame" x="15" y="32" width="59" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="QfC-6P-SGf" secondAttribute="height" multiplier="26:15" id="2cJ-us-erV"/>
                                 </constraints>
@@ -667,7 +676,7 @@
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Initializing" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yot-PX-FpD">
-                                            <rect key="frame" x="47" y="9" width="76" height="23.5"/>
+                                            <rect key="frame" x="47" y="8" width="76" height="24"/>
                                             <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -684,18 +693,33 @@
                                 </constraints>
                                 <blurEffect style="extraLight"/>
                             </visualEffectView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="owz-dj-Mbs">
+                                <rect key="frame" x="323" y="34" width="32" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="owz-dj-Mbs" secondAttribute="height" multiplier="1:1" id="oYb-hP-I7C"/>
+                                </constraints>
+                                <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" image="refreshIcon">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="resetAR:" destination="tNc-x8-Nzf" eventType="touchUpInside" id="I8J-Tk-eu2"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="rjU-FU-b9A" firstAttribute="centerX" secondItem="EHj-Nc-RHQ" secondAttribute="centerX" id="8UB-05-mIc"/>
+                            <constraint firstItem="rjU-FU-b9A" firstAttribute="bottom" secondItem="huz-ad-CNm" secondAttribute="bottom" id="B4V-Ph-LjA"/>
                             <constraint firstItem="EHj-Nc-RHQ" firstAttribute="centerX" secondItem="huz-ad-CNm" secondAttribute="centerX" id="BlS-X9-8MX"/>
                             <constraint firstItem="QfC-6P-SGf" firstAttribute="top" secondItem="huz-ad-CNm" secondAttribute="top" constant="12" id="CTg-ny-JAw"/>
-                            <constraint firstItem="rjU-FU-b9A" firstAttribute="leading" secondItem="nsf-QK-CTr" secondAttribute="leading" id="CVA-x4-gw5"/>
-                            <constraint firstItem="rjU-FU-b9A" firstAttribute="bottom" secondItem="huz-ad-CNm" secondAttribute="bottom" id="D5i-FT-StQ"/>
-                            <constraint firstItem="rjU-FU-b9A" firstAttribute="top" secondItem="nsf-QK-CTr" secondAttribute="top" id="b8v-3J-ISV"/>
+                            <constraint firstItem="rjU-FU-b9A" firstAttribute="top" secondItem="nsf-QK-CTr" secondAttribute="top" id="M1z-lD-y2C"/>
+                            <constraint firstItem="rjU-FU-b9A" firstAttribute="centerX" secondItem="EHj-Nc-RHQ" secondAttribute="centerX" id="Sav-zB-iOs"/>
+                            <constraint firstItem="owz-dj-Mbs" firstAttribute="top" secondItem="huz-ad-CNm" secondAttribute="top" constant="14" id="Ziz-Ec-hhU"/>
                             <constraint firstItem="QfC-6P-SGf" firstAttribute="leading" secondItem="huz-ad-CNm" secondAttribute="leading" constant="15" id="hC6-2E-PVa"/>
                             <constraint firstItem="EHj-Nc-RHQ" firstAttribute="top" secondItem="huz-ad-CNm" secondAttribute="top" constant="10" id="hN8-Bt-U3f"/>
+                            <constraint firstItem="huz-ad-CNm" firstAttribute="trailing" secondItem="owz-dj-Mbs" secondAttribute="trailing" constant="20" id="idr-6n-bz9"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="QfC-6P-SGf" secondAttribute="trailing" constant="20" symbolic="YES" id="oO4-Ca-KiN"/>
+                            <constraint firstItem="rjU-FU-b9A" firstAttribute="leading" secondItem="nsf-QK-CTr" secondAttribute="leading" id="vEf-KS-nes"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="huz-ad-CNm"/>
                     </view>
@@ -973,13 +997,15 @@
         <image name="backButton" width="32" height="32"/>
         <image name="cube" width="32" height="32"/>
         <image name="gradient" width="500" height="200"/>
+        <image name="horizontalIcon" width="32" height="32"/>
         <image name="paletteIcon" width="32" height="32"/>
+        <image name="refreshIcon" width="32" height="32"/>
         <image name="settingsIcon" width="32" height="32"/>
         <image name="wigwam_background" width="2500" height="1854"/>
         <image name="yesIcon" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="icL-30-aeZ"/>
-        <segue reference="inj-tq-Xef"/>
+        <segue reference="lvY-b4-7g6"/>
     </inferredMetricsTieBreakers>
 </document>

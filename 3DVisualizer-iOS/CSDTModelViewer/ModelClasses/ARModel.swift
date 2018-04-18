@@ -29,7 +29,7 @@ class ARModel:NSObject{
     var prevZoomScale: CGFloat = 0
     var isThreeD = true
     var twoDImage: UIImage?
-    var view: UIView!
+    var planeDirection: String!
     
     override init() {
         super.init()
@@ -42,7 +42,13 @@ class ARModel:NSObject{
             let geometry = SCNBox(width: 300, height: 300, length: 0.01, chamferRadius: 0)
             geometry.firstMaterial?.diffuse.contents = twoDImage
             nodeToUse = SCNNode(geometry: geometry)
-            nodeToUse.runAction(SCNAction.rotateBy(x: CGFloat.pi/2, y: 0, z: 0, duration: 0.0001))
+            switch planeDirection{
+            case "Horizontal":
+                nodeToUse.runAction(SCNAction.rotateBy(x: CGFloat.pi/2, y: 0, z: 0, duration: 0.0001))
+            case "Vertical":
+                nodeToUse.runAction(SCNAction.rotateBy(x: CGFloat.pi, y: 0, z: 0, duration: 0.0001))
+            default: break
+            }
         }
         
         nodeToUse.scale = SCNVector3Make(modelScale, modelScale, modelScale)

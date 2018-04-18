@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import SceneKit
+import ARKit
 
 
 func customGreen() -> UIColor {
@@ -39,6 +40,8 @@ let stringToLightType: Dictionary<String, SCNLight.LightType> =
     ["Omnidirectional": .omni, "Ambient":.ambient, "Directional":.directional, "Probe": .probe, "Spot": .spot]
 let stringToBlendMode: Dictionary<String, SCNBlendMode> =
     ["Add": .add, "Alpha": .alpha, "Multiply": .multiply, "Replace": .replace, "Screen": .screen, "Subtract": .subtract]
+let stringToPlaneDetection: Dictionary<String, ARWorldTrackingConfiguration.PlaneDetection> =
+    ["Horizontal":.horizontal, "Vertical": .vertical]
 
 func determineLightType(with light:SCNLight) -> String{
     switch light.type{
@@ -74,6 +77,17 @@ func determineBlendMode(with mode:SCNBlendMode) -> String{
     default: break
     }
     return "Alpha"
+}
+
+func determinePlaneDetectionMode(with mode: ARWorldTrackingConfiguration.PlaneDetection) -> String{
+    switch mode {
+    case .horizontal:
+        return "Horizontal"
+    case .vertical:
+        return "Vertical"
+    default:
+        return "Horizontal"
+    }
 }
 
 func overlayTextWithVisualEffect(using text:String, on view: UIView){

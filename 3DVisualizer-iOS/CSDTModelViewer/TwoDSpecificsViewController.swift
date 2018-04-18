@@ -15,8 +15,20 @@ class TwoDSpecificsViewController: UIViewController, XMLParserDelegate {
     @IBOutlet weak var specificsTextView: UITextView!
     @IBOutlet weak var viewARButton: UIButton!
     @IBOutlet weak var imageLoadingIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var planeDirButton: UIBarButtonItem!
     var specificData: (String, String, String, String, String)!
     var ARModelLink = ""
+    var isHorizontal = true {
+        didSet{
+            if isHorizontal{
+                planeDirButton.image = UIImage(named: "horizontalIcon")
+                overlayTextWithVisualEffect(using: "Horizontal AR Plane", on: view)
+            } else {
+                planeDirButton.image = UIImage(named: "verticalIcon")
+                overlayTextWithVisualEffect(using: "Vertical AR Plane", on: view)
+            }
+        }
+    }
 
     
     override func viewDidLoad() {
@@ -59,6 +71,7 @@ class TwoDSpecificsViewController: UIViewController, XMLParserDelegate {
             guard val != "" else { return }
             ARModelLink = "https://csdt.rpi.edu" + (val ?? "")
             viewARButton.setTitle("View in 3D", for: .normal)
+            planeDirButton.isEnabled = false
             parser.abortParsing() // no need to continue parsing since we already have what we need
         }
     }
@@ -76,6 +89,9 @@ class TwoDSpecificsViewController: UIViewController, XMLParserDelegate {
         UIApplication.shared.open(URL(string: specificData.3)!, options: [:], completionHandler: nil)
     }
     
+    @IBAction func changePlaneDirection(_ sender: UIBarButtonItem) {
+        isHorizontal = !isHorizontal
+    }
     @IBAction func modelARSegue(_ sender: UIButton) {
         DispatchQueue.main.async {
             if self.ARModelLink == "" { // 2d segue
@@ -104,6 +120,7 @@ class TwoDSpecificsViewController: UIViewController, XMLParserDelegate {
             ar.lightColor = UIColor.white
             ar.modelScale = 0.002
             ar.rotationAxis = "Y"
+            ar.planeDirection = isHorizontal ? "Horizontal" : "Vertical"
             dest.ar = ar
         }
         if let dest = destination as? SceneViewController{

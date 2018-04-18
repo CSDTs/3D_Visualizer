@@ -45,7 +45,7 @@ class AugmentedRealityViewController: UIViewController, ARSCNViewDelegate {
         super.viewWillAppear(animated)
         // Create a session configuration
         let configuration = ARWorldTrackingConfiguration()
-        configuration.planeDetection = .horizontal
+        configuration.planeDetection = stringToPlaneDetection[ar.planeDirection]!
         configuration.worldAlignment = .gravityAndHeading
         configuration.isLightEstimationEnabled = true
         
@@ -98,6 +98,21 @@ class AugmentedRealityViewController: UIViewController, ARSCNViewDelegate {
         ar.handleZoom(with: sender)
     }
     
+    @IBAction func resetAR(_ sender: UIButton) {
+        sceneView.session.pause()
+        sceneView.scene.rootNode.enumerateChildNodes { node, _ in
+            node.removeFromParentNode()
+        }
+        ar.isModelAdded = false
+        ar.isPlaneAdded = false
+        // Run the view's session
+        let configuration = ARWorldTrackingConfiguration()
+        configuration.planeDetection = stringToPlaneDetection[ar.planeDirection]!
+        configuration.worldAlignment = .gravityAndHeading
+        configuration.isLightEstimationEnabled = true
+        sceneView.session.run(configuration, options: [.removeExistingAnchors, .resetTracking])
+        
+    }
     // MARK: - ARSCNViewDelegate
     
     func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
@@ -105,7 +120,7 @@ class AugmentedRealityViewController: UIViewController, ARSCNViewDelegate {
         
         if let planeAnchor = anchor as? ARPlaneAnchor{
             if !ar.isModelAdded && !ar.isPlaneAdded{
-                DispatchQueue.main.async { overlayTextWithVisualEffect(using: "Surface Recognized", on: self.view)}
+                DispatchQueue.main.async { overlayTextWithVisualEffect(using: "Surface Recognized", on: self.view) }
                 node = SCNNode()
                 ar.handlePlaneAddition(usingAnchor: planeAnchor, andNode: node)
             }

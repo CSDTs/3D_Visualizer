@@ -13,13 +13,16 @@ class SceneSettingsTableViewController: UITableViewController {
                                    ["Ambient", "Directional", "Omnidirectional", "Probe", "Spot"],
                                    ["On: Intensity, Off: Temperature"],
                                    ["Add","Alpha", "Multiply", "Subtract", "Screen", "Replace"],
-                                   ["None", "Rotate"]]
+                                   ["None", "Rotate"],
+                                   ["Horizontal", "Vertical"]]
     let sectionTitles: [String] = ["AR Settings","Light Settings",
-                                   "Sliding Slider Changes The ... of Light","Blend Mode Settings", "Animation Settings"]
+                                   "Sliding Slider Changes The ... of Light","Blend Mode Settings", "Animation Settings",
+                                   "AR Plane Detection Direction"]
     let impactGenerator = UIImpactFeedbackGenerator(style: .medium)
     
     var lightSettings: String!
     var blendSettings: String!
+    var planeSettings: String!
     var selectedLightSetting: String!
     var selectedBlendSetting: String!
     var selectedAnimationSetting: animationSettings!
@@ -106,6 +109,12 @@ class SceneSettingsTableViewController: UITableViewController {
                 cell.tintColor = customGreen()
             }
             cell.textLabel?.text = allSettings[indexPath.section][indexPath.row]
+        case 5:
+            if planeSettings == allSettings[indexPath.section][indexPath.row]{
+                cell.accessoryType = .checkmark
+                cell.tintColor = customGreen()
+            }
+            cell.textLabel?.text = allSettings[indexPath.section][indexPath.row]
         default:break
         }
         return cell
@@ -151,10 +160,20 @@ class SceneSettingsTableViewController: UITableViewController {
             animationMode = selectedAnimationSetting
             prevAnimationIndex = indexPath
             tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+        case 5:
+            planeSettings = allSettings[indexPath.section][indexPath.row]
+            tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+            tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
         default:break
         }
         if indexPath.section != 0 {tableView.cellForRow(at: indexPath)?.tintColor = customGreen() }
         impactGenerator.impactOccurred()
+    }
+    
+    override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        if indexPath.section == 5{
+            tableView.cellForRow(at: indexPath)?.accessoryType = .none
+        }
     }
     
     // prepare for unwind segue back to scenekit view - get the value from picker
