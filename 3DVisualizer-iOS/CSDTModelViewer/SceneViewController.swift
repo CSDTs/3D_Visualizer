@@ -120,6 +120,9 @@ class SceneViewController: UIViewController, UIPopoverPresentationControllerDele
             self.present(saveAlert, animated: true, completion: nil)
             UserDefaults.standard.set(false, forKey: "ThirdPartyLaunch")
         }
+        NotificationCenter.default.addObserver(forName: NSNotification.Name.UIApplicationWillTerminate, object: UIApplication.shared, queue: OperationQueue.main){ _ in
+            if let blobs = self.blobLink { try? FileManager.default.removeItem(at: blobs) }
+        }
     }
     
     fileprivate func setUp(){

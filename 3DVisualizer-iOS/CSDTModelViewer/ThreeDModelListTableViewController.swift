@@ -36,6 +36,9 @@ class ThreeDModelListTableViewController: UITableViewController, UIViewControlle
             registerForPreviewing(with: self, sourceView: tableView)
         }
         NotificationCenter.default.addObserver(self, selector: #selector(handleARPeekDismiss(with:)), name: Notification.Name.viewARPeekDidDismiss, object: nil)
+        if self.tabBarController?.tabBar.isHidden ?? false{
+            self.tabBarController?.tabBar.isHidden = false
+        }
     }
     
     @objc func handleARPeekDismiss(with notification:NSNotification){
@@ -126,6 +129,7 @@ class ThreeDModelListTableViewController: UITableViewController, UIViewControlle
         guard let indexPath = tableView.indexPathForRow(at: location), let cell = tableView.cellForRow(at: indexPath), let threeDVC = storyboard?.instantiateViewController(withIdentifier: "sceneViewController") as? SceneViewController else { return nil }
         if indexPath.section == 0 {
             threeDVC.customURL = models[indexPath.row].path
+            threeDVC.ARModelScale = 0.002
         } else if indexPath.section == 1{
             threeDVC.customURL = savedModels[indexPath.row].path
         }
@@ -137,7 +141,8 @@ class ThreeDModelListTableViewController: UITableViewController, UIViewControlle
     
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
         viewControllerToCommit.navigationController?.setNavigationBarHidden(true, animated: false)
-        show(viewControllerToCommit, sender: self)
+        self.tabBarController?.tabBar.isHidden = true
+        present(viewControllerToCommit, animated: true, completion: nil)
     }
  
 }

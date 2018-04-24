@@ -28,6 +28,7 @@ class SceneSettingsTableViewController: UITableViewController {
     var selectedAnimationSetting: animationSettings!
     var prevLightIndex: IndexPath!
     var prevBlendIndex: IndexPath!
+    var prevPlaneIndex: IndexPath!
     var prevAnimationIndex: IndexPath!
     var animationMode: animationSettings!
     var ARModelScale:Float!
@@ -113,6 +114,7 @@ class SceneSettingsTableViewController: UITableViewController {
             if planeSettings == allSettings[indexPath.section][indexPath.row]{
                 cell.accessoryType = .checkmark
                 cell.tintColor = customGreen()
+                prevPlaneIndex = indexPath
             }
             cell.textLabel?.text = allSettings[indexPath.section][indexPath.row]
         default:break
@@ -151,30 +153,26 @@ class SceneSettingsTableViewController: UITableViewController {
         case 4:
             tableView.cellForRow(at: prevAnimationIndex)?.accessoryType = .none
             switch allSettings[indexPath.section][indexPath.row]{
-            case "None":
-                selectedAnimationSetting = animationSettings.none
-            case "Rotate":
-                selectedAnimationSetting = .rotate
-            default: break
+                case "None":
+                    selectedAnimationSetting = animationSettings.none
+                case "Rotate":
+                    selectedAnimationSetting = .rotate
+                default: break
             }
             animationMode = selectedAnimationSetting
             prevAnimationIndex = indexPath
             tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
         case 5:
+            tableView.cellForRow(at: prevPlaneIndex)?.accessoryType = .none
             planeSettings = allSettings[indexPath.section][indexPath.row]
+            prevPlaneIndex = indexPath
             tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
-            tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
         default:break
         }
         if indexPath.section != 0 {tableView.cellForRow(at: indexPath)?.tintColor = customGreen() }
         impactGenerator.impactOccurred()
     }
     
-    override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        if indexPath.section == 5{
-            tableView.cellForRow(at: indexPath)?.accessoryType = .none
-        }
-    }
     
     // prepare for unwind segue back to scenekit view - get the value from picker
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
