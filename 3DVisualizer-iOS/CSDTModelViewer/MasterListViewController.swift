@@ -26,6 +26,7 @@ class MasterListViewController: UIViewController {
     
     
     @IBAction func donePickingFromList(_ sender: UIBarButtonItem) {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
         dismiss(animated: true, completion: nil)
     }
     

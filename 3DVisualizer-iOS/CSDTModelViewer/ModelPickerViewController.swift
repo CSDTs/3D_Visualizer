@@ -11,20 +11,43 @@ import Alamofire
 
 class ModelPickerViewController: UIViewController {
     var customURL: String! = "None"
-    let defaultURL = "http://thingiverse-production-new.s3.amazonaws.com/assets/c4/4c/76/de/9b/jordanb.stl"
+    let defaultURL = "https://github.com/nealrs/CADViewer/raw/gh-pages/models/tsa.stl"
     @IBOutlet weak var customURLButton: UIButton!
     @IBOutlet weak var defaultURLButton: UIButton!
     @IBOutlet weak var listButton: UIButton!
+    var isThirdPartyOpen = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        customURLButton.layer.cornerRadius = 15.0
+        customURLButton.layer.cornerRadius = 30.0
         customURLButton.clipsToBounds = true
-        defaultURLButton.layer.cornerRadius = 15.0
+        defaultURLButton.layer.cornerRadius = 30.0
         defaultURLButton.clipsToBounds = true
-        listButton.layer.cornerRadius = 15.0
+        listButton.layer.cornerRadius = 30.0
         listButton.clipsToBounds = true
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if UserDefaults.standard.bool(forKey: "ThirdPartyLaunch"){
+            isThirdPartyOpen = true
+            DispatchQueue.main.async { self.performSegue(withIdentifier: "donePickingModel", sender: self)}
+            return
+        }
+        if UserDefaults.standard.bool(forKey: "OpenLink"){
+            customURLButton.sendActions(for: .touchUpInside)
+        }
+        if UserDefaults.standard.bool(forKey: "OpenDefault"){
+            defaultURLButton.sendActions(for: .touchUpInside)
+        }
+        if UserDefaults.standard.bool(forKey: "OpenList"){
+            listButton.sendActions(for: .touchUpInside)
+        }
+        UserDefaults.standard.set(false, forKey: "OpenLink")
+        UserDefaults.standard.set(false, forKey: "OpenDefault")
+        UserDefaults.standard.set(false, forKey: "OpenList")
+    }
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -39,7 +62,7 @@ class ModelPickerViewController: UIViewController {
     }
     
     @IBAction func customURLSegue(_ sender: UIButton) {
-        let alert = UIAlertController(title: "Enter Model URL", message: nil, preferredStyle: .alert)
+        let alert = UIAlertController(title: "Enter Model URL", message: "Enter a url containing a 3D model", preferredStyle: .alert)
         alert.addTextField{ textField in
             textField.text = self.defaultURL
         }
@@ -61,7 +84,12 @@ class ModelPickerViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let dest = segue.destination as? SceneViewController{
             if customURL != "None"{
+                dest.isFromWeb = true
                 dest.customURL = customURL
+            }
+            if isThirdPartyOpen{
+                dest.customURL = UserDefaults.standard.url(forKey: "OpenedModel")!.path
+                isThirdPartyOpen = false
             }
         }
     }

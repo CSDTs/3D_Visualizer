@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import SceneKit
+import ARKit
 
 
 func customGreen() -> UIColor {
@@ -35,11 +36,12 @@ enum animationSettings{
     case rotate
 }
 
-
 let stringToLightType: Dictionary<String, SCNLight.LightType> =
     ["Omnidirectional": .omni, "Ambient":.ambient, "Directional":.directional, "Probe": .probe, "Spot": .spot]
 let stringToBlendMode: Dictionary<String, SCNBlendMode> =
     ["Add": .add, "Alpha": .alpha, "Multiply": .multiply, "Replace": .replace, "Screen": .screen, "Subtract": .subtract]
+let stringToPlaneDetection: Dictionary<String, ARWorldTrackingConfiguration.PlaneDetection> =
+    ["Horizontal":.horizontal, "Vertical": .vertical]
 
 func determineLightType(with light:SCNLight) -> String{
     switch light.type{
@@ -75,6 +77,17 @@ func determineBlendMode(with mode:SCNBlendMode) -> String{
     default: break
     }
     return "Alpha"
+}
+
+func determinePlaneDetectionMode(with mode: ARWorldTrackingConfiguration.PlaneDetection) -> String{
+    switch mode {
+    case .horizontal:
+        return "Horizontal"
+    case .vertical:
+        return "Vertical"
+    default:
+        return "Horizontal"
+    }
 }
 
 func overlayTextWithVisualEffect(using text:String, on view: UIView){
@@ -130,12 +143,25 @@ func configureDropShadow(with button:UIButton){
 func setupCollectionViewLayout(with collectionView: UICollectionView?,
                                     andSize sizeClass: UIUserInterfaceSizeClass){
     let widthFactor: CGFloat = (sizeClass == .compact) ? 2.0 : 3.0
+    let heightFactor: CGFloat = (sizeClass == .compact) ? 1.71 : 3.0
     let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
     let width = UIScreen.main.bounds.width
     layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-    layout.itemSize = CGSize(width: width / widthFactor, height: width / 1.71)// 2.05 & 1.75
+    layout.itemSize = CGSize(width: width / widthFactor, height: width / heightFactor)// 2.05 & 1.75
     layout.minimumInteritemSpacing = 0
     layout.minimumLineSpacing = 0
     layout.headerReferenceSize = CGSize(width: UIScreen.main.bounds.width, height: 27)
-    collectionView!.collectionViewLayout = layout
+    collectionView?.collectionViewLayout = layout
 }
+
+extension UIColor{
+    class func rgb(r red:CGFloat, g green:CGFloat, b blue:CGFloat) -> UIColor{
+        return UIColor(red: red/255, green: green/255, blue: blue/255, alpha: 1)
+    }
+}
+
+extension Notification.Name{
+    static let onLightSwitchChange = Notification.Name("on-light-switch-change")
+    static let viewARPeekDidDismiss = Notification.Name("viewARPeekDidDismiss");
+}
+

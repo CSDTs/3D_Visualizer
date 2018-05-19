@@ -1,3 +1,7 @@
+<p align="center">
+    <img width="250" height="250" src="3DVisualizer-iOS/CSDTModelViewer/Assets.xcassets/AppIcon.appiconset/3DVisualizerIconDesign-1024.png">
+</p>
+
 # 3D_Visualizer_iOS
 This is an iOS application for visualizing 3D CAD models, created using SceneKit, Model I/O and ARKit.
 
@@ -5,19 +9,22 @@ This is an iOS application for visualizing 3D CAD models, created using SceneKit
 
 ### Fetch Models
 *  Fetch the models using a valid web link or use the default wigwam model. If the link is invalid, the application will fall back to using the default wigwam model.
-* Pick a model from the 3D/2D list. For 2D, the app presents a grid-like layout displaying all the images of projects fetched from the applications API from CSDT. The user can view the image in detail and display the image using AR.
+* Pick a model from the Device/Server list. For Server, the app presents a grid-like layout displaying all the images of projects fetched from the projects API from CSDT. The user can view the image in detail and display the image using AR if no 3D model data are found. If there is a 3D model associated with the project, the user can visualize it in 3D and AR.
+* Import models from a third-party source (e.g. mail attachment), visualize it and save on device.
 
 ### Manupulate models with SceneKit
 * Zoom, move and rotate model with gestures
 * Manipulate the color of the model with segmented control
 * Adjust light intensity with slider
 * Change the position of the light with a tap on the scene
+* Pick the color of model with a horizontally-scrollable picker interface.
 * Settings Page
     * Change the scale factor used for the AR model
         * **For large models like wigwam, a very small factor such 0.002 is needed to display AR content correctly**
     * Pick from light types: omnidirectional, directional, probe, spot or ambient
     * Pick from blend modes: add, alpha, multiply, subtract, screen or replace
     * Animations! Choose from no animation or infinite rotation
+    * Change the slider behavior: changing light intensity or color temperature
 
 Relevant code needed to set up SceneKit - obtained from WWDC Presentation
 

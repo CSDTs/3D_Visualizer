@@ -9,12 +9,16 @@
 /* Begin PBXBuildFile section */
 		0420FFAD2025021600FCA0EB /* SceneSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0420FFAC2025021600FCA0EB /* SceneSettingsTableViewController.swift */; };
 		0420FFAF2025075A00FCA0EB /* Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0420FFAE2025075A00FCA0EB /* Shared.swift */; };
+		042BCB3E207F19110052AC18 /* ThreeDDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042BCB3D207F19110052AC18 /* ThreeDDataModel.swift */; };
+		042BCB40207F207C0052AC18 /* JSONFetch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042BCB3F207F207C0052AC18 /* JSONFetch.swift */; };
+		042BCB42207F29500052AC18 /* ARModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042BCB41207F29500052AC18 /* ARModel.swift */; };
+		042BCB44207FA1BC0052AC18 /* SceneViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042BCB43207FA1BC0052AC18 /* SceneViewModel.swift */; };
 		0447270C2023C64C003A9095 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0447270B2023C64C003A9095 /* AppDelegate.swift */; };
 		0447270E2023C64C003A9095 /* SceneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0447270D2023C64C003A9095 /* SceneViewController.swift */; };
 		044727112023C64C003A9095 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0447270F2023C64C003A9095 /* Main.storyboard */; };
 		044727132023C64C003A9095 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 044727122023C64C003A9095 /* Assets.xcassets */; };
 		044727162023C64C003A9095 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 044727142023C64C003A9095 /* LaunchScreen.storyboard */; };
-		044727202023D3BF003A9095 /* wigwaam.stl in Resources */ = {isa = PBXBuildFile; fileRef = 0447271F2023D3BF003A9095 /* wigwaam.stl */; };
+		044E8F462066C04D00A2FD1A /* Models in Resources */ = {isa = PBXBuildFile; fileRef = 044E8F452066C04D00A2FD1A /* Models */; };
 		045B39092026327800E3BA39 /* AugmentedRealityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045B39082026327800E3BA39 /* AugmentedRealityViewController.swift */; };
 		047A8DF22037A4590066521A /* MasterListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047A8DF12037A4590066521A /* MasterListViewController.swift */; };
 		047A8DF62037CAED0066521A /* ThreeDModelListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047A8DF52037CAED0066521A /* ThreeDModelListTableViewController.swift */; };
@@ -22,12 +26,18 @@
 		04854EE820312A6E00D4958C /* SettingsPickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04854EE720312A6E00D4958C /* SettingsPickerTableViewCell.swift */; };
 		0486266120380590003E1400 /* TwoDSpecificsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0486266020380590003E1400 /* TwoDSpecificsViewController.swift */; };
 		04AFD7EF202434B600FA5DFF /* ModelPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFD7EE202434B600FA5DFF /* ModelPickerViewController.swift */; };
+		04DFE45720412AAD00AB8FBF /* SettingsHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04DFE45620412AAD00AB8FBF /* SettingsHeaderView.xib */; };
+		04DFE45920412B5F00AB8FBF /* SettingsHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DFE45820412B5F00AB8FBF /* SettingsHeader.swift */; };
 		3501D39EF228C1775D27D401 /* Pods_CSDTModelViewer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 328D86A68850FCB8F41D52F0 /* Pods_CSDTModelViewer.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0420FFAC2025021600FCA0EB /* SceneSettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneSettingsTableViewController.swift; sourceTree = "<group>"; };
 		0420FFAE2025075A00FCA0EB /* Shared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shared.swift; sourceTree = "<group>"; };
+		042BCB3D207F19110052AC18 /* ThreeDDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreeDDataModel.swift; sourceTree = "<group>"; };
+		042BCB3F207F207C0052AC18 /* JSONFetch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONFetch.swift; sourceTree = "<group>"; };
+		042BCB41207F29500052AC18 /* ARModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARModel.swift; sourceTree = "<group>"; };
+		042BCB43207FA1BC0052AC18 /* SceneViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneViewModel.swift; sourceTree = "<group>"; };
 		044727082023C64C003A9095 /* CSDTModelViewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CSDTModelViewer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0447270B2023C64C003A9095 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0447270D2023C64C003A9095 /* SceneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneViewController.swift; sourceTree = "<group>"; };
@@ -35,7 +45,7 @@
 		044727122023C64C003A9095 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		044727152023C64C003A9095 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		044727172023C64C003A9095 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0447271F2023D3BF003A9095 /* wigwaam.stl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = wigwaam.stl; sourceTree = "<group>"; };
+		044E8F452066C04D00A2FD1A /* Models */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Models; sourceTree = "<group>"; };
 		045B39082026327800E3BA39 /* AugmentedRealityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AugmentedRealityViewController.swift; sourceTree = "<group>"; };
 		047A8DF12037A4590066521A /* MasterListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterListViewController.swift; sourceTree = "<group>"; };
 		047A8DF52037CAED0066521A /* ThreeDModelListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreeDModelListTableViewController.swift; sourceTree = "<group>"; };
@@ -43,6 +53,8 @@
 		04854EE720312A6E00D4958C /* SettingsPickerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPickerTableViewCell.swift; sourceTree = "<group>"; };
 		0486266020380590003E1400 /* TwoDSpecificsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoDSpecificsViewController.swift; sourceTree = "<group>"; };
 		04AFD7EE202434B600FA5DFF /* ModelPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelPickerViewController.swift; sourceTree = "<group>"; };
+		04DFE45620412AAD00AB8FBF /* SettingsHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsHeaderView.xib; sourceTree = "<group>"; };
+		04DFE45820412B5F00AB8FBF /* SettingsHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsHeader.swift; sourceTree = "<group>"; };
 		14CC5F52A9D4EF190A6985F4 /* Pods-CSDTModelViewer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CSDTModelViewer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CSDTModelViewer/Pods-CSDTModelViewer.debug.xcconfig"; sourceTree = "<group>"; };
 		328D86A68850FCB8F41D52F0 /* Pods_CSDTModelViewer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CSDTModelViewer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9098B8F5B7076EB16E061B56 /* Pods-CSDTModelViewer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CSDTModelViewer.release.xcconfig"; path = "Pods/Target Support Files/Pods-CSDTModelViewer/Pods-CSDTModelViewer.release.xcconfig"; sourceTree = "<group>"; };
@@ -68,6 +80,19 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		042BCB3C207F18C90052AC18 /* ModelClasses */ = {
+			isa = PBXGroup;
+			children = (
+				042BCB3D207F19110052AC18 /* ThreeDDataModel.swift */,
+				0420FFAE2025075A00FCA0EB /* Shared.swift */,
+				042BCB3F207F207C0052AC18 /* JSONFetch.swift */,
+				04DFE45820412B5F00AB8FBF /* SettingsHeader.swift */,
+				042BCB41207F29500052AC18 /* ARModel.swift */,
+				042BCB43207FA1BC0052AC18 /* SceneViewModel.swift */,
+			);
+			path = ModelClasses;
+			sourceTree = "<group>";
+		};
 		044726FF2023C64C003A9095 = {
 			isa = PBXGroup;
 			children = (
@@ -89,12 +114,13 @@
 		0447270A2023C64C003A9095 /* CSDTModelViewer */ = {
 			isa = PBXGroup;
 			children = (
-				0447271F2023D3BF003A9095 /* wigwaam.stl */,
+				042BCB3C207F18C90052AC18 /* ModelClasses */,
+				044E8F452066C04D00A2FD1A /* Models */,
 				0447270B2023C64C003A9095 /* AppDelegate.swift */,
 				0447270D2023C64C003A9095 /* SceneViewController.swift */,
 				0420FFAC2025021600FCA0EB /* SceneSettingsTableViewController.swift */,
+				04DFE45620412AAD00AB8FBF /* SettingsHeaderView.xib */,
 				04AFD7EE202434B600FA5DFF /* ModelPickerViewController.swift */,
-				0420FFAE2025075A00FCA0EB /* Shared.swift */,
 				045B39082026327800E3BA39 /* AugmentedRealityViewController.swift */,
 				0447270F2023C64C003A9095 /* Main.storyboard */,
 				0486266020380590003E1400 /* TwoDSpecificsViewController.swift */,
@@ -147,8 +173,11 @@
 		044727002023C64C003A9095 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				KnownAssetTags = (
+					New,
+				);
 				LastSwiftUpdateCheck = 0920;
-				LastUpgradeCheck = 0920;
+				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = "Jing Wei Li";
 				TargetAttributes = {
 					044727072023C64C003A9095 = {
@@ -180,8 +209,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				044E8F462066C04D00A2FD1A /* Models in Resources */,
 				044727162023C64C003A9095 /* LaunchScreen.storyboard in Resources */,
-				044727202023D3BF003A9095 /* wigwaam.stl in Resources */,
+				04DFE45720412AAD00AB8FBF /* SettingsHeaderView.xib in Resources */,
 				044727132023C64C003A9095 /* Assets.xcassets in Resources */,
 				044727112023C64C003A9095 /* Main.storyboard in Resources */,
 			);
@@ -252,8 +282,13 @@
 				0420FFAF2025075A00FCA0EB /* Shared.swift in Sources */,
 				0447270E2023C64C003A9095 /* SceneViewController.swift in Sources */,
 				0486266120380590003E1400 /* TwoDSpecificsViewController.swift in Sources */,
+				042BCB40207F207C0052AC18 /* JSONFetch.swift in Sources */,
 				047A8DF82037D0C10066521A /* TwoDModelCollectionViewController.swift in Sources */,
+				04DFE45920412B5F00AB8FBF /* SettingsHeader.swift in Sources */,
+				042BCB3E207F19110052AC18 /* ThreeDDataModel.swift in Sources */,
 				04854EE820312A6E00D4958C /* SettingsPickerTableViewCell.swift in Sources */,
+				042BCB44207FA1BC0052AC18 /* SceneViewModel.swift in Sources */,
+				042BCB42207F29500052AC18 /* ARModel.swift in Sources */,
 				0447270C2023C64C003A9095 /* AppDelegate.swift in Sources */,
 				04AFD7EF202434B600FA5DFF /* ModelPickerViewController.swift in Sources */,
 				047A8DF62037CAED0066521A /* ThreeDModelListTableViewController.swift in Sources */,
@@ -298,6 +333,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -305,6 +341,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -332,7 +369,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -355,6 +392,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -362,6 +400,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -383,7 +422,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
